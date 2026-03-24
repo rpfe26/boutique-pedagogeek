@@ -1,0 +1,5 @@
+# Updraft backups
+wp-content/updraft/*.zip
+wp-content/updraft/*.gz
+wp-content/updraft/*.sql
+wp-content/wpvivid_staging/

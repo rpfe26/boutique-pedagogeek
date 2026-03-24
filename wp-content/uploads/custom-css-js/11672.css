@@ -1,0 +1,40 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+/* 1. Aligner les éléments en ligne et inverser pour le remplissage */
+.rating-stars .acf-radio-list {
+    display: flex !important;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+/* 2. Cacher les boutons radio et les chiffres */
+.rating-stars .acf-radio-list li {
+    list-style: none !important;
+}
+
+.rating-stars .acf-radio-list input {
+    display: none !important;
+}
+
+.rating-stars .acf-radio-list label {
+    font-size: 0 !important; /* Cache le texte du chiffre */
+    cursor: pointer;
+    padding: 0 2px !important;
+}
+
+/* 3. Dessiner l'étoile vide par défaut */
+.rating-stars .acf-radio-list label::before {
+    content: '★';
+    font-size: 32px;
+    color: #ccc;
+}
+
+/* 4. Remplissage persistant (quand cliqué) et au survol */
+/* On colorie l'étoile sélectionnée ET toutes celles qui la "suivent" en row-reverse */
+.rating-stars .acf-radio-list li:has(input:checked) ~ li label::before,
+.rating-stars .acf-radio-list li:has(input:checked) label::before,
+.rating-stars .acf-radio-list li:hover ~ li label::before,
+.rating-stars .acf-radio-list li:hover label::before {
+    color: #ffca08 !important;
+}</style>
+<!-- end Simple Custom CSS and JS -->

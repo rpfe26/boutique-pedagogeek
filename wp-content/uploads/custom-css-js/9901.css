@@ -1,0 +1,7 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+#editor .eb-pattern-library-button-wrapper {
+    display: none !important;
+}
+</style>
+<!-- end Simple Custom CSS and JS -->

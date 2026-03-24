@@ -1,0 +1,235 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+/* ==========================================================================
+   2. STYLE GÉNÉRAL & CONTENEURS
+   ========================================================================== */
+body {
+    background-color: #f4f7f6;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #444;
+}
+
+/* Cadres blancs arrondis (Tableau de bord, Formulaire, Vue) */
+.app-list-container, 
+.fdap-view-container, 
+.acf-form {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    border: 1px solid #fff;
+}
+
+/* ==========================================================================
+   3. LE TABLEAU DE BORD (Liste des fiches)
+   ========================================================================== */
+/* Gros bouton "Nouvelle Activité" */
+.app-big-btn {
+    display: block;
+    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    color: white;
+    text-align: center;
+    padding: 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+}
+
+.app-big-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(108, 92, 231, 0.5);
+    color: white;
+}
+
+/* Grille et Cartes */
+.app-grid { display: flex; flex-direction: column; gap: 15px; }
+
+.app-card {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-left: 6px solid #6c5ce7;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+
+.app-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* Bouton Modifier (Crayon) */
+.app-btn-edit {
+    background: #f1f2f6;
+    color: #2d3436;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85em;
+    border: 1px solid #dfe6e9;
+    transition: all 0.2s;
+}
+
+.app-btn-edit:hover {
+    background: #6c5ce7;
+    color: #fff;
+    border-color: #6c5ce7;
+}
+
+/* ==========================================================================
+   4. BARRE D'ACTION (Message succès + Bouton Voir)
+   ========================================================================== */
+.app-actions-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, #e3fcef, #ffffff);
+    border-left: 5px solid #00cec9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.app-success-msg { color: #00b894; font-weight: bold; font-size: 1.1em; }
+
+.app-btn-view {
+    background: #fff;
+    color: #333;
+    border: 2px solid #dfe6e9;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9em;
+    transition: all 0.3s;
+}
+
+.app-btn-view:hover {
+    border-color: #0984e3;
+    color: #0984e3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ==========================================================================
+   5. LE FORMULAIRE DE SAISIE (Moderne)
+   ========================================================================== */
+
+/* Titres des sections (Accordéons) */
+.acf-field-accordion { margin-top: 30px; }
+
+.acf-field-accordion .acf-accordion-title {
+    background: #0984e3 !important;
+    color: #fff !important;
+    padding: 15px 20px !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 14px;
+    border: none !important;
+    box-shadow: 0 4px 10px rgba(9, 132, 227, 0.3);
+    pointer-events: none; 
+}
+.acf-field-accordion .acf-accordion-title svg { display: none !important; }
+
+/* Conteneur des champs */
+.acf-fields {
+    border: 1px solid #e1e4e8;
+    background: #fdfdfd;
+    padding: 25px;
+    border-radius: 0 0 8px 8px;
+    margin-bottom: 20px;
+}
+
+/* Styles des Inputs (Champs texte) */
+.acf-field input[type="text"],
+.acf-field input[type="email"],
+.acf-field input[type="number"],
+.acf-field input[type="date"],
+.acf-field textarea,
+.acf-field select {
+    background: #fff;
+    border: 2px solid #dfe6e9;
+    border-radius: 8px;
+    padding: 12px;
+    width: 100%;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+.acf-field input:focus, .acf-field textarea:focus {
+    border-color: #6c5ce7;
+    outline: none;
+}
+
+/* Bouton ENREGISTRER LA FICHE */
+.acf-form-submit input[type="submit"] {
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%) !important;
+    color: white !important;
+    font-size: 1.2em !important;
+    padding: 16px 32px !important;
+    border: none !important;
+    border-radius: 12px !important;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s !important;
+    box-shadow: 0 5px 15px rgba(0, 184, 148, 0.3);
+}
+
+.acf-form-submit input[type="submit"]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 184, 148, 0.5);
+}
+
+/* --- CORRECTIF FORCE ACCORDÉON --- */
+
+/* 1. Force le contenu à être toujours visible */
+.acf-field-accordion .acf-accordion-content {
+    display: block !important;
+    height: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    padding: 15px 0 !important; /* Petit espace pour aérer */
+}
+
+/* 2. On désactive le clic sur la barre bleue (pour éviter que ça tente de se fermer) */
+.acf-field-accordion .acf-accordion-title {
+    pointer-events: none !important; 
+    cursor: default !important;
+}
+
+/* 3. On cache la petite flèche qui ne sert plus à rien */
+.acf-field-accordion .acf-accordion-title svg,
+.acf-field-accordion .acf-accordion-title:after,
+.acf-field-accordion .acf-accordion-title:before {
+    display: none !important;
+}
+
+/* --- RESPONSIVE : Empiler les champs sur mobile --- */
+@media screen and (max-width: 768px) {
+    /* Sur les écrans de moins de 768px (tablettes et mobiles) */
+    .acf-field {
+        width: 100% !important; /* Force la largeur totale */
+        float: none !important; /* Annule l'alignement côte à côte */
+        padding-left: 0 !important; /* Enlève les marges bizarres */
+        padding-right: 0 !important;
+    }
+}</style>
+<!-- end Simple Custom CSS and JS -->

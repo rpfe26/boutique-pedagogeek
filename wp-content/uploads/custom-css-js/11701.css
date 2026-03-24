@@ -1,0 +1,114 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+/* ==========================================================================
+   DESIGN "JOLI" (MODERNE)
+   ========================================================================== */
+
+/* 1. Le Conteneur Global */
+.fdap-view-container {
+    max-width: 21cm; /* Largeur A4 fixe pour le PDF */
+    margin: 30px auto;
+    background: #fff;
+    border-radius: 10px; /* Joli arrondi */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    border: 1px solid #eee;
+    position: relative;
+}
+
+/* 2. En-tête Bleu Dégradé */
+.view-header-main {
+    background: linear-gradient(135deg, #0984e3 0%, #00cec9 100%); /* Votre beau dégradé */
+    padding: 40px 30px;
+    text-align: center;
+    color: white;
+}
+.view-header-main h1 {
+    margin: 0;
+    color: white !important;
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+.view-subtitle {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* 3. Corps */
+.view-body { padding: 40px; background: #fff; }
+
+/* 4. Titres de Section */
+.view-section-title {
+    background: #dfe6e9;
+    color: #2d3436;
+    padding: 12px 15px;
+    border-left: 5px solid #0984e3;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 14px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    border-radius: 0 5px 5px 0;
+}
+
+/* 5. Champs (Style Input) */
+.view-field-wrapper { margin-bottom: 20px; box-sizing: border-box; }
+
+.view-label {
+    display: block;
+    font-weight: 700;
+    color: #636e72;
+    margin-bottom: 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.view-input-fake {
+    background: #fdfdfd;
+    border: 1px solid #b2bec3; /* Bordure plus visible comme un input */
+    border-radius: 6px;
+    padding: 12px 15px;
+    color: #2d3436;
+    font-size: 14px;
+    min-height: 20px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); /* Petit effet de profondeur */
+}
+
+/* 6. Fichiers & Etoiles */
+.view-file-zone {
+    border: 2px dashed #b2bec3;
+    background: #f1f2f6;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+}
+.view-file-link {
+    display: inline-block; background: white; padding: 8px 15px; 
+    border-radius: 20px; text-decoration: none; color: #0984e3; font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.view-stars { font-size: 22px; letter-spacing: 2px; }
+
+/* 7. Bouton PDF */
+.fdap-actions-bar {
+    text-align: right; padding: 15px 30px; background: #f8f9fa; border-bottom: 1px solid #eee;
+}
+.btn-pdf {
+    background: #00b894; color: white; border: none; padding: 10px 20px;
+    border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;
+}
+.btn-pdf:hover { background: #00a884; }
+
+/* Footer */
+.view-footer { text-align: center; padding: 20px; color: #b2bec3; font-size: 11px; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .view-field-wrapper { width: 100% !important; display: block !important; margin-right: 0 !important; }
+}</style>
+<!-- end Simple Custom CSS and JS -->

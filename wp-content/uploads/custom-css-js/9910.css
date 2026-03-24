@@ -1,0 +1,13 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+/* Masquer les blocs de texte en mode publication */
+.masquer-en-publication {
+    display: none; /* Les blocs avec cette classe seront cachés côté public */
+}
+
+/* Assurer la visibilité des blocs en mode édition Gutenberg */
+body.wp-admin .masquer-en-publication {
+    display: block !important; /* En mode édition, les blocs restent visibles */
+}
+</style>
+<!-- end Simple Custom CSS and JS -->

@@ -1,0 +1,264 @@
+<?php
+/**
+ * Blur functions and definitions
+ *
+ * @link https://developer.wordpress.org/themes/basics/theme-functions/
+ *
+ * @package Blur
+ * @since Blur 1.0
+ */
+
+
+if ( ! function_exists( 'blur_support' ) ) :
+
+	/**
+	 * Sets up theme defaults and registers support for various WordPress features.
+	 *
+	 * @since Blur 1.0
+	 *
+	 * @return void
+	 */
+	function blur_support() {
+		// Add default posts and comments RSS feed links to head.
+		add_theme_support( 'automatic-feed-links' );
+
+		// Add support for block styles.
+		add_theme_support( 'wp-block-styles' );
+
+		add_theme_support( 'align-wide' );
+
+		// Enqueue editor styles.
+		add_editor_style( 'style.css' );
+
+		add_theme_support( 'responsive-embeds' );
+		
+
+		// Add support for experimental link color control.
+		add_theme_support( 'experimental-link-color' );
+
+		//define
+		define( 'BLUR_VERSION', '1.0.0' );
+	    define( 'BLUR_DEBUG', defined( 'WP_DEBUG' ) && WP_DEBUG === true );
+	    define( 'BLUR_DIR', trailingslashit( get_template_directory() ) );
+	    define( 'BLUR_URL', trailingslashit( get_template_directory_uri() ) );
+
+	}
+
+endif;
+
+add_action( 'after_setup_theme', 'blur_support' );
+
+if ( ! function_exists( 'blur_styles' ) ) :
+
+	/**
+	 * Enqueue styles.
+	 *
+	 * @since Blur 1.0
+	 *
+	 * @return void
+	 */
+	function blur_styles() {
+
+		// Register theme stylesheet.
+		wp_register_style(
+			'blur-style',
+			get_template_directory_uri() . '/style.css',
+			array(),
+			wp_get_theme()->get( 'Version' )
+		);
+
+		// Enqueue theme stylesheet.
+		wp_enqueue_style( 'blur-style' );
+
+	}
+
+endif;
+
+add_action( 'wp_enqueue_scripts', 'blur_styles' );
+
+
+// Add block patterns
+require get_template_directory() . '/inc/block-pattern.php';
+
+// Add block Style
+require get_template_directory() . '/inc/block-style.php';
+
+//theme option panel
+require get_template_directory() . '/theme-option/theme-option.php';
+/**
+ * Sauvegarde automatique du post après upload d'attachment
+ * Hook déclenché automatiquement après chaque upload
+ */
+add_action('add_attachment', 'boutique_auto_save_post', 10, 1);
+
+function boutique_auto_save_post($attachment_id) {
+    // Récupérer le post associé
+    $attachment = get_post($attachment_id);
+    
+    // Si pas de post_parent, on ne fait rien (attachment direct)
+    if (!$attachment || !$attachment->post_parent) {
+        return;
+    }
+    
+    // Récupérer le post parent
+    $post = get_post($attachment->post_parent);
+    
+    
+    // Mettre à jour le post (mets à jour post_modified)
+    wp_update_post([
+        'ID' => $post->ID,
+        'post_modified' => current_time('mysql'),
+        'post_modified_gmt' => current_time('mysql', true)
+    ]);
+}
+
+
+/**
+ * Validation des uploads - Format et taille
+ */
+add_filter('wp_handle_upload_prefilter', 'boutique_validate_upload');
+
+function boutique_validate_upload($file) {
+    $valid_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'application/pdf'];
+    $max_size = 5 * 1024 * 1024; // 5MB
+    
+    if (!in_array($file['type'], $valid_types)) {
+        return ['error' => 'Format non supporté (JPG, PNG, GIF, WebP uniquement)'];
+    }
+    
+    if ($file['size'] > $max_size) {
+        return ['error' => 'Fichier trop lourd (max 5MB)'];
+    }
+    
+    return $file;
+}
+
+// === AMELIORATION LISIBILITE HEADER ===
+function blur_enqueue_custom_header_css() {
+    wp_enqueue_style(
+        'blur-custom-header',
+        get_template_directory_uri() . '/assets/css/custom-header.css',
+        array(),
+        '1.0.0'
+    );
+}
+add_action('wp_enqueue_scripts', 'blur_enqueue_custom_header_css');
+
+// === AMELIORATION BACKOFFICE - ONGLETS CLIQUABLES ===
+function blur_enqueue_admin_tabs_css() {
+    wp_enqueue_style(
+        'blur-admin-tabs',
+        get_template_directory_uri() . '/assets/css/admin-tabs.css',
+        array(),
+        '1.0.0'
+    );
+}
+add_action('admin_enqueue_scripts', 'blur_enqueue_admin_tabs_css');
+
+// === INDICATEUR BACK OFFICE DANS LA BARRE ADMIN ===
+function blur_add_backoffice_indicator_admin_bar($admin_bar) {
+    if (current_user_can('edit_posts')) {
+        $admin_bar->add_node([
+            'id' => 'back-office-indicator',
+            'title' => '<span class="bo-badge">⚙️ BACK OFFICE</span>',
+            'href' => admin_url(),
+            'meta' => [
+                'title' => __('Mode administration - Back Office'),
+                'class' => 'backoffice-indicator'
+            ]
+        ]);
+    }
+}
+add_action('admin_bar_menu', 'blur_add_backoffice_indicator_admin_bar', 1);
+
+// === BACK OFFICE BADGE CSS FOR FRONTEND ===
+function blur_enqueue_admin_bar_css() {
+    if (is_user_logged_in() && current_user_can('edit_posts')) {
+        wp_enqueue_style('blur-admin-tabs',
+            get_template_directory_uri() . '/assets/css/admin-tabs.css',
+            array(), '1.0.1');
+    }
+}
+add_action('wp_enqueue_scripts', 'blur_enqueue_admin_bar_css');
+
+// === FDAP - COMPRESSION AUTOMATIQUE IMAGES 300KB ===
+// Comprime les images uploadées à 300KB max
+define("FDAP_MAX_FILESIZE", 300 * 1024);
+define("FDAP_MAX_DIMENSION", 1920);
+define("FDAP_JPEG_QUALITY", 75);
+define("FDAP_MIN_QUALITY", 40);
+define("FDAP_MIN_DIMENSION", 800);
+
+// add_filter("wp_handle_upload_prefilter", "fdap_upload_prefilter");
+
+function fdap_upload_prefilter($file) {
+    if (!isset($file["type"]) || !in_array($file["type"], ["image/jpeg", "image/jpg", "image/png", "image/webp"])) {
+        return $file;
+    }
+    if (!file_exists($file["tmp_name"])) {
+        return $file;
+    }
+    
+    $result = fdap_compress_image($file["tmp_name"], $file["type"]);
+    
+    if ($result && !is_wp_error($result)) {
+        $file["size"] = $result["final_size"];
+        if ($result["converted"]) {
+            $file["name"] = preg_replace("/\.(png|webp)$/i", ".jpg", $file["name"]);
+            $file["type"] = "image/jpeg";
+        }
+    }
+    return $file;
+}
+
+function fdap_compress_image($file_path, $mime_type) {
+    try {
+        $image = new Imagick($file_path);
+        $image->autoOrient();
+        
+        if (in_array($mime_type, ["image/png", "image/webp"])) {
+            $image->setImageFormat("jpeg");
+            $image->setImageBackgroundColor("white");
+            $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
+        } else {
+            $image->setImageFormat("jpeg");
+        }
+        
+        $geometry = $image->getImageGeometry();
+        if ($geometry["width"] > FDAP_MAX_DIMENSION || $geometry["height"] > FDAP_MAX_DIMENSION) {
+            $image->resizeImage(FDAP_MAX_DIMENSION, FDAP_MAX_DIMENSION, Imagick::FILTER_LANCZOS, 1, true);
+        }
+        
+        $quality = FDAP_JPEG_QUALITY;
+        $attempts = 0;
+        
+        while ($attempts < 10 && $quality >= FDAP_MIN_QUALITY) {
+            $image->setImageCompressionQuality($quality);
+            $image->stripImage();
+            $image->writeImage($file_path);
+            
+            if (filesize($file_path) <= FDAP_MAX_FILESIZE) {
+                $image->destroy();
+                return ["success" => true, "final_size" => filesize($file_path), "converted" => true];
+            }
+            
+            $quality -= 5;
+            $attempts++;
+        }
+        
+        // Réduire dimensions si nécessaire
+        $current = $image->getImageGeometry();
+        $new_dim = max(FDAP_MIN_DIMENSION, (int)($current["width"] * 0.85));
+        $image->resizeImage($new_dim, $new_dim, Imagick::FILTER_LANCZOS, 1, true);
+        $image->setImageCompressionQuality(50);
+        $image->stripImage();
+        $image->writeImage($file_path);
+        $image->destroy();
+        
+        return ["success" => true, "final_size" => filesize($file_path), "converted" => true];
+        
+    } catch (Exception $e) {
+        error_log("[FDAP] Erreur: " . $e->getMessage());
+        return new WP_Error("compression_failed", $e->getMessage());
+    }
+}

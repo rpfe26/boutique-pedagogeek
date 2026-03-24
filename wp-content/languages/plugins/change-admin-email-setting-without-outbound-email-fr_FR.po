@@ -1,0 +1,41 @@
+# Translation of Plugins - Change Admin Email - Stable (latest release) in French (France)
+# This file is distributed under the same license as the Plugins - Change Admin Email - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2024-10-07 17:37:48+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: fr\n"
+"Project-Id-Version: Plugins - Change Admin Email - Stable (latest release)\n"
+
+#: change-admin-email.php:74
+msgid "Check your email inbox. A test message has been sent to you."
+msgstr "Vérifiez votre boîte de réception. Un message de test vous a été envoyé."
+
+#. Author URI of the plugin
+#: change-admin-email.php
+msgid "https://generalchicken.guru/"
+msgstr "https://generalchicken.guru/"
+
+#. Author of the plugin
+#: change-admin-email.php
+msgid "John Dee"
+msgstr "John Dee"
+
+#. Description of the plugin
+#: change-admin-email.php
+msgid "Restores functionality removed since WordPress v4.9. Allows admin to change the admin email setting - without having outbound email enabled on the site, or recipient email credentials."
+msgstr "Restaure la fonctionnalité retirée depuis WordPress 4.9. Autorise les administratrices et les administrateurs à modifier l’adresse e-mail d’administration même sans les e-mails sortants activés, ou sans les informations de connexion à l’adresse e-mail du destinataire."
+
+#. Plugin URI of the plugin
+#: change-admin-email.php
+msgid "https://generalchicken.guru/change-admin-email/"
+msgstr "https://generalchicken.guru/change-admin-email/"
+
+#. Plugin Name of the plugin
+#: change-admin-email.php
+msgid "Change Admin Email Setting Without Outbound Email"
+msgstr "Change Admin Email Setting Without Outbound Email"

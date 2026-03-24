@@ -1,0 +1,50 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+/* Cibler spécifiquement le bloc d'articles récents */
+.wp-block-latest-posts {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    max-width: 100%; /* Assure-toi que le bloc ne dépasse pas les limites de la page */
+}
+
+.wp-block-latest-posts h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.wp-block-latest-posts a {
+    background-color: #0073aa;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.wp-block-latest-posts ul {
+    list-style-type: none; /* Supprimer les puces de la liste */
+    padding: 0;
+}
+
+.wp-block-latest-posts ul li {
+    margin-bottom: 10px;
+}
+
+.wp-block-latest-posts ul li a {
+    text-decoration: none;
+    color: #0073aa;
+}
+
+.wp-block-latest-posts ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Empêche la modification de la largeur du bloc */
+.wp-block-latest-posts {
+    box-sizing: border-box;
+}
+</style>
+<!-- end Simple Custom CSS and JS -->

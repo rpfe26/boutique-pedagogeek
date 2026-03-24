@@ -1,0 +1,47 @@
+# Translation of Plugins - The Icon Block - Stable (latest release) in French (France)
+# This file is distributed under the same license as the Plugins - The Icon Block - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2025-02-23 14:02:20+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: fr\n"
+"Project-Id-Version: Plugins - The Icon Block - Stable (latest release)\n"
+
+#. Plugin Name of the plugin
+#: icon-block.php
+msgid "The Icon Block"
+msgstr "The Icon Block"
+
+#: build/block.json
+msgctxt "block keyword"
+msgid "svg"
+msgstr "svg"
+
+#: build/block.json
+msgctxt "block keyword"
+msgid "icon"
+msgstr "icône"
+
+#: build/block.json
+msgctxt "block description"
+msgid "Insert an SVG icon or graphic."
+msgstr "Ajouter une icône ou une illustration SVG."
+
+#: build/block.json
+msgctxt "block title"
+msgid "Icon"
+msgstr "Icône"
+
+#. Author URI of the plugin
+#: icon-block.php
+msgid "https://www.nickdiego.com"
+msgstr "https://www.nickdiego.com"
+
+#. Author of the plugin
+#: icon-block.php
+msgid "Nick Diego"
+msgstr "Nick Diego"

@@ -1,0 +1,185 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+/* ==========================================================================
+   1. STYLE GÉNÉRAL (BASE)
+   ========================================================================== */
+body {
+    background-color: #f4f7f6;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #444;
+}
+
+/* LE CADRE PRINCIPAL (Blanc & Arrondi) */
+.fdap-view-container, 
+.app-list-container, 
+.acf-form {
+    max-width: 21cm; /* Format A4 Bureau */
+    width: 100%;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    border: 1px solid #fff;
+    padding: 40px;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+/* ==========================================================================
+   2. LE BOUTON "NOUVELLE ACTIVITÉ" (ONGLET COLORÉ)
+   ========================================================================== */
+.app-big-btn {
+    display: block;
+    /* Le dégradé Violet/Bleu */
+    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    color: white !important;
+    text-align: center;
+    padding: 18px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+}
+
+.app-big-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.5);
+    color: white !important;
+}
+
+/* ==========================================================================
+   3. DESIGN DE LA FICHE (VUE)
+   ========================================================================== */
+/* Header Bleu */
+.view-header-main {
+    background: linear-gradient(135deg, #0984e3 0%, #00cec9 100%);
+    padding: 40px 30px; text-align: center; color: white;
+    border-radius: 12px 12px 0 0; 
+    /* Astuce pour coller aux bords */
+    margin: -40px -40px 40px -40px;
+}
+.view-header-main h1 {
+    margin: 0; color: white !important; font-size: 24px; text-transform: uppercase; font-weight: 800;
+}
+.view-subtitle { display: block; margin-top: 10px; font-size: 14px; opacity: 0.9; }
+
+/* Titres section */
+.view-section-title {
+    background: #dfe6e9; color: #2d3436; padding: 12px 15px;
+    border-left: 5px solid #0984e3; font-weight: 700; text-transform: uppercase;
+    font-size: 14px; margin: 30px 0 20px 0; border-radius: 0 4px 4px 0;
+}
+
+/* Champs Vue */
+.view-input-fake {
+    background: #fdfdfd; border: 1px solid #b2bec3; border-radius: 6px;
+    padding: 12px 15px; color: #2d3436; font-size: 15px; min-height: 20px;
+}
+.view-label { display: block; font-weight: 700; color: #636e72; margin-bottom: 8px; font-size: 12px; text-transform: uppercase; }
+.view-field-wrapper { margin-bottom: 20px; box-sizing: border-box; }
+
+/* Boutons Actions (Sauvegarder) */
+.btn-image, .btn-pdf {
+    background: #6c5ce7; color: white; border: none; padding: 12px 24px;
+    border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;
+    text-decoration: none; display: inline-block;
+}
+
+/* ==========================================================================
+   4. DESIGN DU FORMULAIRE (ÉDITION)
+   ========================================================================== */
+.acf-fields {
+    border: 1px solid #e1e4e8; background: #fdfdfd; padding: 25px;
+    border-radius: 8px; margin-bottom: 20px;
+}
+
+/* Accordéons (Barre Bleue) */
+.acf-field-accordion { margin-top: 30px; }
+.acf-field-accordion .acf-accordion-title {
+    background: #0984e3 !important; color: #fff !important; padding: 15px 20px !important;
+    border-radius: 8px !important; font-weight: 700 !important; text-transform: uppercase;
+    font-size: 14px; border: none !important; pointer-events: none !important;
+}
+.acf-field-accordion .acf-accordion-content { display: block !important; padding: 15px 0 !important; }
+.acf-field-accordion .acf-accordion-title svg { display: none !important; }
+
+/* Inputs */
+.acf-field input[type="text"], .acf-field input[type="date"], 
+.acf-field textarea, .acf-field select {
+    background: #fff; border: 2px solid #dfe6e9; border-radius: 8px;
+    padding: 12px; width: 100%; font-size: 15px; box-sizing: border-box;
+}
+.acf-field input:focus, .acf-field textarea:focus { border-color: #6c5ce7; outline: none; }
+
+/* Bouton Enregistrer (Vert) */
+.acf-form-submit input[type="submit"] {
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%) !important;
+    color: white !important; padding: 16px !important; border: none !important;
+    border-radius: 12px !important; width: 100%; text-transform: uppercase;
+    font-weight: bold; font-size: 1.1em !important; cursor: pointer; margin-top: 20px;
+}
+
+/* Etoiles */
+.rating-stars .acf-radio-list { display: flex !important; flex-direction: row-reverse; justify-content: flex-end; }
+.rating-stars .acf-radio-list li { list-style: none !important; margin: 0 !important; }
+.rating-stars .acf-radio-list label { font-size: 0 !important; padding: 0 2px !important; cursor: pointer; }
+.rating-stars .acf-radio-list label::before { content: '★'; font-size: 32px; color: #ccc; }
+.rating-stars .acf-radio-list li:hover label::before,
+.rating-stars .acf-radio-list li:has(input:checked) label::before,
+.rating-stars .acf-radio-list li:has(input:checked) ~ li label::before { color: #ffca08 !important; }
+
+/* Liste des fiches (Cards) */
+.app-card {
+    background: #fff; border: 1px solid #f0f0f0; border-left: 6px solid #6c5ce7;
+    border-radius: 10px; padding: 20px; display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+.app-grid { display: flex; flex-direction: column; }
+.app-btn-view, .app-btn-edit {
+    text-decoration: none; padding: 8px 15px; border-radius: 20px; 
+    font-weight: bold; font-size: 13px; border: 1px solid #eee; color: #555; display: inline-block;
+}
+
+/* ==========================================================================
+   5. VERSION MOBILE (Stable)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+    
+    /* On passe à 96% de largeur sur mobile pour être à l'aise */
+    .fdap-view-container, 
+    .app-list-container, 
+    .acf-form {
+        width: 96% !important; 
+        max-width: 96% !important;
+        margin: 10px auto !important;
+        padding: 20px 15px !important; /* Padding interne raisonnable */
+    }
+
+    /* Le bouton Nouvelle Activité prend toute la largeur */
+    .app-big-btn { width: 100%; box-sizing: border-box; padding: 15px; }
+
+    /* On force les champs à prendre toute la largeur */
+    .acf-field, .view-field-wrapper {
+        width: 100% !important;
+        float: none !important;
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    
+    /* Ajustements header pour qu'il touche les bords du cadre */
+    .view-header-main { margin: -20px -15px 25px -15px; padding: 30px 15px; border-radius: 12px 12px 0 0; }
+    .view-header-main h1 { font-size: 20px; }
+
+    /* Boutons actions */
+    .fdap-actions-bar { margin: -20px -15px 20px -15px; }
+    .btn-image { width: 100%; text-align: center; }
+}
+
+.pdf-spacer { display: block; clear: both; background: transparent; }</style>
+<!-- end Simple Custom CSS and JS -->

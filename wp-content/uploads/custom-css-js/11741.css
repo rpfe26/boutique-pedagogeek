@@ -1,0 +1,59 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+/* ==========================================================================
+   ZONES DE TÉLÉCHARGEMENT SIMPLIFIÉES (GROS BOUTONS)
+   ========================================================================== */
+
+/* 1. On transforme la zone grise en gros bouton cliquable */
+.acf-image-uploader, .acf-file-uploader {
+    background-color: #f1f2f6 !important;
+    border: 2px dashed #b2bec3 !important;
+    border-radius: 12px !important;
+    min-height: 100px !important; /* Hauteur confortable pour le doigt */
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+}
+
+/* Changement de couleur au clic/survol */
+.acf-image-uploader:hover, .acf-file-uploader:hover {
+    background-color: #e3f2fd !important;
+    border-color: #0984e3 !important;
+}
+
+/* 2. On stylise le bouton "Ajouter" à l'intérieur pour qu'il soit bien visible */
+.acf-image-uploader .button, 
+.acf-file-uploader .button {
+    background: #0984e3 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 50px !important; /* Forme de pilule */
+    padding: 10px 25px !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    box-shadow: 0 4px 6px rgba(9, 132, 227, 0.3) !important;
+    margin: 0 !important;
+    position: relative !important;
+    z-index: 10;
+}
+
+/* 3. Petit texte d'aide (optionnel, si ACF en ajoute) */
+.acf-image-uploader p, .acf-file-uploader p {
+    margin: 10px 0 0 0 !important;
+    color: #636e72;
+    font-size: 12px;
+}
+
+/* 4. Une fois le fichier chargé, on garde un aspect propre */
+.acf-image-uploader.has-value, 
+.acf-file-uploader.has-value {
+    border-style: solid !important;
+    border-color: #00b894 !important; /* Bordure verte quand c'est bon */
+    background: #fff !important;
+}</style>
+<!-- end Simple Custom CSS and JS -->

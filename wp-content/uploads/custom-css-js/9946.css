@@ -1,0 +1,22 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+.uagb-buttons__wrap {
+    display: flex;
+    flex-wrap: wrap; /* Pour qu'ils restent sur une ligne */
+    justify-content: space-between; /* Espace entre chaque bouton */
+}
+
+.uagb-buttons__wrap .uagb-buttons-child {
+    flex: 1 1 15%; /* Ajuste la taille des boutons pour qu'ils s'adaptent à la largeur disponible */
+    margin: 10px;
+}
+
+.uagb-buttons__wrap .uagb-buttons-child .uagb-button__link {
+    white-space: nowrap; /* Empêche le texte de déborder sur plusieurs lignes */
+    padding: 10px 15px; /* Ajuste le padding si nécessaire pour que le texte tienne */
+    font-size: 14px; /* Ajuste la taille de la police */
+    text-align: center;
+}
+
+</style>
+<!-- end Simple Custom CSS and JS -->

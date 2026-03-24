@@ -1,0 +1,67 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+/* --- Styles pour l'impression uniquement --- */
+@media print {
+    /* 1. On cache tout ce qui n'est pas le contenu */
+    body * {
+        visibility: hidden;
+    }
+
+    /* 2. On rend visible l'article et son contenu */
+    /* REMARQUE : '.post' et '.entry-content' sont les classes standards WP.
+       Si cela ne marche pas, vérifiez si votre thème utilise 'article' ou '#content' */
+    .post, .post *, .entry-content, .entry-content * {
+        visibility: visible;
+    }
+
+    /* 3. On repositionne l'article en haut à gauche de la feuille */
+    .post {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* 4. On cache le bouton d'impression lui-même sur le papier */
+    #mon-bouton-impression {
+        display: none !important;
+    }
+    
+    /* 5. On retire les couleurs de fond pour économiser l'encre */
+    body, article {
+        background: #fff !important;
+    }
+	
+	/* Évite de couper une image ou un paragraphe en deux */
+    img, pre, blockquote, tr, li {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Force les titres à rester avec le texte qui suit (pas de titre orphelin en bas de page) */
+    h1, h2, h3, h4, h5 {
+        page-break-after: avoid;
+        break-after: avoid;
+    }
+  /* 3. TYPOGRAPHIE VERDANA */
+    body {
+        /* Verdana en priorité, sinon une police sans-serif standard */
+        font-family: Verdana, Geneva, sans-serif !important;
+        
+        /* 11pt suffit pour Verdana (car elle est large). 
+           12pt ferait un peu trop gros. */
+        font-size: 11pt !important; 
+        
+        line-height: 1.5 !important;
+        color: #1a1a1a !important;
+    }
+    
+    /* On s'assure que les titres utilisent aussi Verdana ou une police similaire */
+    h1, h2, h3, h4, p, li, td, span, div {
+        font-family: Verdana, Geneva, sans-serif !important;
+        color: #1a1a1a !important;
+    }
+}</style>
+<!-- end Simple Custom CSS and JS -->

@@ -1,0 +1,14 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+/* Effet de hover sur l'image de départ de la modale */
+.uagb-modal-trigger img {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Effet de hover : zoom et opacité sur l'image déclencheuse */
+.uagb-modal-trigger img:hover {
+  transform: scale(1.05); /* Zoom à 105% */
+  opacity: 0.9; /* Opacité à 90% */
+}
+</style>
+<!-- end Simple Custom CSS and JS -->

@@ -1,0 +1,50 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+/* Forcer le texte à ne pas être souligné */
+.uagb-button__link {
+    text-decoration: none !important; /* Forcer l'absence de soulignement */
+}
+
+/* Couleurs pour chaque bouton avec remplissage */
+.uagb-block-70322d6f .uagb-button__link {
+    background-color: #3498db !important; /* Bleu clair */
+    color: #fff !important; /* Texte en blanc */
+    border-color: transparent !important; /* Supprimer la bordure */
+}
+
+.uagb-block-5c6a5b30 .uagb-button__link {
+    background-color: #e74c3c !important; /* Rouge */
+    color: #fff !important; /* Texte en blanc */
+    border-color: transparent !important; /* Supprimer la bordure */
+}
+
+.uagb-block-63653ab9 .uagb-button__link {
+    background-color: #2ecc71 !important; /* Vert */
+    color: #fff !important; /* Texte en blanc */
+    border-color: transparent !important; /* Supprimer la bordure */
+}
+
+.uagb-block-e5e5cd99 .uagb-button__link {
+    background-color: #f1c40f !important; /* Jaune */
+    color: #fff !important; /* Texte en blanc */
+    border-color: transparent !important; /* Supprimer la bordure */
+}
+
+.uagb-block-ef12a5cd .uagb-button__link {
+    background-color: #9b59b6 !important; /* Violet */
+    color: #fff !important; /* Texte en blanc */
+    border-color: transparent !important; /* Supprimer la bordure */
+}
+
+.uagb-block-8fe074c5 .uagb-button__link {
+    background-color: #34495e !important; /* Bleu foncé */
+    color: #fff !important; /* Texte en blanc */
+    border-color: transparent !important; /* Supprimer la bordure */
+}
+
+/* Ajuster le radius si nécessaire */
+.uagb-buttons-child .uagb-button__link {
+    border-radius: 30px !important; /* Pour garder les boutons arrondis */
+}
+</style>
+<!-- end Simple Custom CSS and JS -->

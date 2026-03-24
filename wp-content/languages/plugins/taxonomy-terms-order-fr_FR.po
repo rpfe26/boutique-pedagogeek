@@ -1,0 +1,166 @@
+# Translation of Plugins - Category Order and Taxonomy Terms Order - Stable (latest release) in French (France)
+# This file is distributed under the same license as the Plugins - Category Order and Taxonomy Terms Order - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2025-01-25 16:22:47+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.0.1\n"
+"Language: fr\n"
+"Project-Id-Version: Plugins - Category Order and Taxonomy Terms Order - Stable (latest release)\n"
+
+#. Author URI of the plugin
+#: taxonomy-terms-order.php
+msgid "https://www.nsp-code.com"
+msgstr "https://www.nsp-code.com"
+
+#. Description of the plugin
+#: taxonomy-terms-order.php
+msgid "Order Categories and all custom taxonomies terms (hierarchically) and child terms using a Drag and Drop Sortable javascript capability."
+msgstr "Ordonner les catégories et tous les termes et termes enfants de taxonomies personnalisées (hiérarchiquement) and utilisant un glisser-déposé javascript."
+
+#. Plugin URI of the plugin
+#: taxonomy-terms-order.php
+msgid "http://www.nsp-code.com"
+msgstr "http://www.nsp-code.com"
+
+#. Author of the plugin
+#: taxonomy-terms-order.php
+msgid "Nsp-Code"
+msgstr "Nsp-Code"
+
+#. Plugin Name of the plugin
+#: taxonomy-terms-order.php
+msgid "Category Order and Taxonomy Terms Order"
+msgstr "Category Order and Taxonomy Terms Order"
+
+#: include/class.tto.php:70
+msgid "Taxonomy Terms Order"
+msgstr "Ordonner les termes de taxonomies"
+
+#: include/class.options.php:109
+msgid "Admin Sort"
+msgstr "Tri dans l'administration"
+
+#: include/class.options.php:126
+msgid "Save Settings"
+msgstr "Sauvegarder les réglages"
+
+#: include/class.options.php:104
+msgid "global setting"
+msgstr "Configuration globale"
+
+#: include/class.options.php:104 include/class.options.php:115
+msgid "Additional description and details at "
+msgstr "Description et informations additionnelles sur"
+
+#: include/class.options.php:104 include/class.options.php:115
+msgid "Auto Sort Description"
+msgstr "Tri automatique par description"
+
+#: include/class.options.php:115
+msgid "This will change the order of terms within the admin interface"
+msgstr "Cela changera l’ordre des termes dans l’interface d’administration"
+
+#: include/class.options.php:98
+msgid "Auto Sort"
+msgstr "Tri automatique"
+
+#: include/class.options.php:101 include/class.options.php:112
+msgid "OFF"
+msgstr "NON"
+
+#: include/class.options.php:102 include/class.options.php:113
+msgid "ON"
+msgstr "OUI"
+
+#: include/class.options.php:89
+msgid "Editor"
+msgstr "Éditeur"
+
+#: include/class.options.php:90
+msgid "Administrator"
+msgstr "Administrateur"
+
+#: include/class.options.php:88
+msgid "Author"
+msgstr "Auteurs"
+
+#: include/class.options.php:83
+msgid "Minimum Level to use this plugin"
+msgstr "Rôle minimum pour utiliser ce plugin"
+
+#: include/class.options.php:86
+msgid "Subscriber"
+msgstr "Abonné"
+
+#: include/class.options.php:87
+msgid "Contributor"
+msgstr "Contributeur"
+
+#: include/class.options.php:34
+msgid "General"
+msgstr "Principal"
+
+#: include/class.options.php:28
+msgid "General Settings"
+msgstr "Réglages généraux"
+
+#: include/class.interface.php:205
+msgid "Items Order Updated"
+msgstr "Ordre des enregistrements mis à jour."
+
+#: include/class.options.php:20
+msgid "Settings Saved"
+msgstr "Les paramètres enregistrés"
+
+#: include/class.functions.php:77 include/class.functions.php:78
+msgid "Check our"
+msgstr "Découvrez notre plugin"
+
+#: include/class.interface.php:50
+msgid "This plugin can't work without javascript, because it's use drag and drop and AJAX."
+msgstr "Ce plugin ne peut pas fonctionner sans javascript car il utilise un système de glisser-déposer et fait appel à AJAX."
+
+#: include/class.interface.php:104
+msgid "Taxonomies"
+msgstr "Taxinomies"
+
+#: include/class.interface.php:160
+msgid "Update"
+msgstr "Mettre à jour"
+
+#: include/class.interface.php:108
+msgid "Total Posts"
+msgstr "Publications totales"
+
+#: include/class.interface.php:108
+msgid "Taxonomy Title"
+msgstr "Titre de la taxonomie"
+
+#: include/class.interface.php:42 include/class.tto.php:110
+#: include/class.tto.php:112 include/class.tto.php:114
+msgid "Taxonomy Order"
+msgstr "Ordre des taxonomies"
+
+#: include/class.functions.php:77
+msgid "plugin which allows to custom sort all posts, pages, custom post types"
+msgstr "extension qui permet de trier de manière personnalisée tous les articles, les pages, les types de publication personnalisés"
+
+#: include/class.functions.php:78
+msgid "plugin which allows to custom sort categories and custom taxonomies terms per post basis"
+msgstr "extension qui permet de personnaliser le tri des catégories et des termes de taxonomie personnalisée basée par publication"
+
+#: include/class.functions.php:75
+msgid "Did you find this plugin useful? Please support our work with a donation or write an article about this plugin in your blog with a link to our site"
+msgstr "Avez-vous trouvé ce plugin utile? Soutenez notre travail avec un don ou écrivez un article à propos de ce plugin avec un lien vers notre site."
+
+#: include/class.functions.php:76
+msgid "Read more"
+msgstr "Lire la suite"
+
+#: include/class.functions.php:76
+msgid "Did you know there is an Advanced Version of this plug-in?"
+msgstr "Saviez vous qu’il existe une version avancée de cette extension ?"

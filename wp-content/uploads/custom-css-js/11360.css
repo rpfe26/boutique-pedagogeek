@@ -1,0 +1,7 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+/* Masquer le titre sur toutes les pages */
+.page .entry-title {
+    display: none;
+}</style>
+<!-- end Simple Custom CSS and JS -->

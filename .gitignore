@@ -1,5 +1,11 @@
+# WordPress config (contains credentials)
+wp-config.php
+
 # Updraft backups
 wp-content/updraft/*.zip
 wp-content/updraft/*.gz
 wp-content/updraft/*.sql
 wp-content/wpvivid_staging/
+
+# Uploads (synced from production, not in git)
+# wp-content/uploads/2026/

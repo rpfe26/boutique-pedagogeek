@@ -1,50 +1,5 @@
-# === FICHIERS CORE WORDPRESS (NE PAS TRACKER) ===
-wp-admin/
-wp-includes/
-index.php
-wp-*.php
-xmlrpc.php
-license.txt
-readme.html
-wp-config-sample.php
-
-# === BACKUPS ET CACHE ===
-wp-content/updraft/
-wp-content/cache/
-wp-content/upgrade/
-wp-content/upgrade-temp-backup/
-wp-content/backup-db/
-wp-content/wpvivid_uploads/
+# Updraft backups
+wp-content/updraft/*.zip
+wp-content/updraft/*.gz
+wp-content/updraft/*.sql
 wp-content/wpvivid_staging/
-
-# === FICHIERS TEMPORAIRES ET LOGS ===
-*.log
-*.tmp
-*.temp
-*.bak
-error_log
-debug.log
-wp-content/debug.log
-wp-content/uploads/wc-logs/
-
-# === FICHIERS SENSIBLES (NE PAS TRACKER) ===
-wp-config.php
-.htpasswd
-
-# === FICHIERS SYSTEME ===
-.DS_Store
-Thumbs.db
-*.swp
-*.swo
-*~
-
-# === IDE ET DEVELOPPEMENT ===
-.idea/
-.vscode/
-*.sublime-*
-
-# === NODE ET COMPOSER ===
-node_modules/
-vendor/
-package-lock.json
-composer.lock

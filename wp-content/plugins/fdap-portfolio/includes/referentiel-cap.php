@@ -14,6 +14,10 @@ function fdap_get_referentiel_cap() {
         return $referentiel;
     }
 
+    // Récupérer les compétences personnalisées depuis les options
+    $custom_competences = get_option('_fdap_custom_competencies', []);
+    if (!is_array($custom_competences)) $custom_competences = [];
+
     $referentiel = [
         [
             'id' => 'P1',
@@ -193,6 +197,19 @@ function fdap_get_referentiel_cap() {
                         'Transférer les réclamations non solutionnées au responsable',
                         'Expliquer au client la solution proposée'
                     ]
+                ]
+            ]
+        ],
+        [
+            'id' => 'P4',
+            'label' => 'Pôle 4 : Autres activités personnalisées',
+            'metaCompetences' => [
+                [
+                    'id' => 'M4.1',
+                    'label' => 'Compétences spécifiques ajoutées',
+                    'subCompetences' => array_merge([
+                        'Autre (à préciser)...'
+                    ], $custom_competences)
                 ]
             ]
         ]

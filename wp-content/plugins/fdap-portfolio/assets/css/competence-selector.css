@@ -4,8 +4,8 @@
 
 .fdap-poles-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
     margin-bottom: 24px;
 }
 
@@ -76,7 +76,43 @@
     align-items: center;
     gap: 12px;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+.fdap-meta-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.fdap-meta-id-badge {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    border: 1px solid #cbd5e1;
+    flex-shrink: 0;
+}
+
+.fdap-meta-item.has-selections .fdap-meta-status-dot {
+    background: var(--fdap-primary);
+    box-shadow: 0 0 8px var(--fdap-primary);
+}
+
+.fdap-meta-count {
+    background: var(--fdap-primary);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+    font-weight: 800;
 }
 
 .fdap-subs-list {
@@ -154,4 +190,51 @@
 @keyframes fdapFadeIn {
     from { opacity: 0; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+.fdap-custom-input-box {
+    margin: 10px 0 10px 30px;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 12px;
+    display: flex;
+    gap: 10px;
+    border: 1px dashed var(--fdap-primary);
+    align-items: center;
+}
+
+.fdap-custom-input-box input {
+    flex: 1;
+    padding: 12px 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.fdap-custom-input-box input:focus {
+    border-color: var(--fdap-primary);
+}
+
+.fdap-custom-input-box button {
+    background: var(--fdap-primary);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    transition: all 0.2s;
+}
+
+.fdap-custom-input-box button:hover {
+    background: var(--fdap-primary-dark);
+    transform: translateY(-1px);
+}
+
+.fdap-custom-input-box button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

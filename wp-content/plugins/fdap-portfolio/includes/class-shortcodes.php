@@ -31,9 +31,15 @@ class FDAP_Shortcodes {
             wp_enqueue_script('fdap-form-utils', FDAP_PLUGIN_URL . 'assets/js/form-utils.js', [], FDAP_VERSION, true);
 
             
-            // Passer le référentiel au JS
+            // Passer le référentiel et les paramètres AJAX au JS
             require_once FDAP_PLUGIN_DIR . 'includes/referentiel-cap.php';
-            wp_localize_script('fdap-selector-js', 'fdapReferentiel', fdap_get_referentiel_cap());
+            wp_localize_script('fdap-selector-js', 'fdapData', [
+                'ajaxUrl' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('fdap_form_submit'),
+                'referentiel' => fdap_get_referentiel_cap()
+            ]);
+            // Pour compatibilité descendante immédiate
+            wp_add_inline_script('fdap-selector-js', 'window.fdapReferentiel = fdapData.referentiel;', 'before');
         }
     }
     
@@ -171,43 +177,67 @@ class FDAP_Shortcodes {
         ?>
         <div class="fdap-main-wrapper fdap-dashboard">
             <?php 
-            fdap_render_impersonation_banner(); 
             fdap_render_competency_tracker($current_user_id);
             ?>
 
 
 
 
-            <div class="fdap-header">
-                <h2><?php echo $is_admin && !$author_filter ? 'Toutes les fiches FDAP' : 'Mes fiches'; ?></h2>
-                <a href="<?php echo esc_url($form_url); ?>" class="fdap-btn-new">+ Nouvelle activité</a>
+            <div class="fdap-dashboard-top-bar">
+                <div class="fdap-header-title">
+                    <h2><?php echo $is_admin && !$author_filter ? 'Toutes les fiches FDAP' : 'Mes fiches'; ?></h2>
+                </div>
+                <div class="fdap-header-actions">
+                    <?php if ($is_admin): ?>
+                        <a href="<?php echo add_query_arg('export_all', '1'); ?>" class="fdap-btn-export" title="Exporter toutes les fiches (V2 soon)">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/></svg> Exporter
+                        </a>
+                    <?php endif; ?>
+                    <a href="<?php echo esc_url($form_url); ?>" class="fdap-btn-new">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>
+                        Nouvelle activité
+                    </a>
+                </div>
             </div>
             
-            <?php if (isset($_GET['msg']) && $_GET['msg'] === 'saved'): ?>
-                <div class="fdap-success">Fiche enregistrée !</div>
-            <?php endif; ?>
-            
-            <?php if ($is_admin): ?>
-                <!-- Admin filter by student -->
-                <div class="fdap-admin-filter">
-                    <form method="get" class="fdap-filter-form">
-                        <?php foreach ($_GET as $key => $value): ?>
-                            <?php if ($key !== 'author_filter'): ?>
-                                <input type="hidden" name="<?php echo esc_attr($key); ?>" value="<?php echo esc_attr($value); ?>">
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                        <label>Filtrer par élève :</label>
-                        <select name="author_filter" class="fdap-filter-select" onchange="this.form.submit()">
-                            <option value="">Tous les élèves</option>
-                            <?php foreach ($authors as $author): ?>
-                                <option value="<?php echo $author->ID; ?>" <?php selected($author_filter, $author->ID); ?>>
-                                    <?php echo esc_html($author->display_name); ?>
-                                </option>
-                            <?php endforeach; ?>
+            <div class="fdap-filters-bar">
+                <form method="get" class="fdap-filters-form">
+                    <?php 
+                    // Conserver les autres paramètres GET (ex: page, etc)
+                    foreach ($_GET as $key => $value):
+                        if (is_array($value)) continue;
+                        if (!in_array($key, ['author_filter', 'status_filter', 's'])): ?>
+                            <input type="hidden" name="<?php echo esc_attr($key); ?>" value="<?php echo esc_attr($value); ?>">
+                        <?php endif;
+                    endforeach; ?>
+
+                    <div class="fdap-filter-group">
+                        <div class="fdap-search-input-wrapper">
+                            <input type="text" name="s" placeholder="Rechercher une activité..." value="<?php echo esc_attr($_GET['s'] ?? ''); ?>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
+                        </div>
+
+                        <?php if ($is_admin): ?>
+                            <select name="author_filter">
+                                <option value="">Tous les élèves</option>
+                                <?php foreach ($authors as $author): ?>
+                                    <option value="<?php echo $author->ID; ?>" <?php selected($author_filter, $author->ID); ?>>
+                                        <?php echo esc_html($author->display_name); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        <?php endif; ?>
+
+                        <select name="status_filter">
+                            <option value="">Tous les statuts</option>
+                            <option value="publish" <?php selected($_GET['status_filter'] ?? '', 'publish'); ?>>Publiée</option>
+                            <option value="controlled" <?php selected($_GET['status_filter'] ?? '', 'controlled'); ?>>Contrôlée</option>
                         </select>
-                    </form>
-                </div>
-            <?php endif; ?>
+
+                        <button type="submit" class="fdap-btn-filter">Filtrer</button>
+                    </div>
+                </form>
+            </div>
             
             <?php if ($query->have_posts()): ?>
                 <div class="fdap-table-wrapper">
@@ -230,49 +260,45 @@ class FDAP_Shortcodes {
                                 <?php 
                                 $post_id = get_the_ID();
                                 $post_author_id = get_the_author_ID();
-                                $nom = get_post_meta($post_id, '_fdap_nom_prenom', true);
+                                $author_name = get_the_author_meta('display_name', $post_author_id);
+                                $date = get_post_meta($post_id, '_fdap_date_de_saisie', true);
                                 $lieu = get_post_meta($post_id, '_fdap_lieu_', true);
-                                $lieu_label = $lieu === 'lycee' ? 'Lycée' : ($lieu === 'pfmp' ? 'PFMP' : '-');
                                 $status = get_post_status();
-                                
-                                $status_labels = [
-                                    'publish' => [
-                                        'label' => '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 4px;"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/></svg> Publiée', 
-                                        'class' => 'fdap-status--published'
-                                    ],
-                                    'controlled' => [
-                                        'label' => '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 4px;"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg> Contrôlée', 
-                                        'class' => 'fdap-status--controlled'
-                                    ],
-                                ];
-                                $status_info = $status_labels[$status] ?? ['label' => $status, 'class' => ''];
-                                
-                                $can_edit = ($post_author_id == $current_user_id) || $is_admin;
                                 ?>
                                 <tr>
                                     <?php if ($is_admin): ?>
-                                        <td class="fdap-author-cell">
-                                            <?php if ($post_author_id != $current_user_id): ?>
-                                                <strong><?php the_author(); ?></strong>
-                                            <?php else: ?>
-                                                <span style="color: #64748b;">Moi</span>
-                                            <?php endif; ?>
+                                        <td class="fdap-col-author">
+                                            <strong><?php echo esc_html($author_name); ?></strong>
                                         </td>
                                     <?php endif; ?>
-                                    <td class="fdap-title-cell">
-                                        <a href="<?php the_permalink(); ?>" class="fdap-link" style="font-weight: 700; color: #1e293b;"><?php echo esc_html(get_the_title() ?: 'Sans titre'); ?></a>
+                                    
+                                    <td class="fdap-col-title fdap-title-cell">
+                                        <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                     </td>
-
-                                    <td><?php echo get_the_date('d/m/Y'); ?></td>
-                                    <td><?php echo esc_html($lieu_label); ?></td>
-                                    <td><span class="fdap-status <?php echo $status_info['class']; ?>"><?php echo $status_info['label']; ?></span></td>
-                                    <td class="fdap-actions-cell">
+                                    
+                                    <td class="fdap-col-date">
+                                        <?php echo esc_html($date ?: '—'); ?>
+                                    </td>
+                                    
+                                    <td class="fdap-col-location">
+                                        <?php echo esc_html($lieu === 'pfmp' ? 'PFMP' : ($lieu === 'lycee' ? 'Lycée' : $lieu)); ?>
+                                    </td>
+                                    
+                                    <td class="fdap-col-status">
+                                        <span class="fdap-status fdap-status--<?php echo esc_attr($status); ?>">
+                                            <?php 
+                                            if ($status === 'controlled') echo 'Contrôlée';
+                                            elseif ($status === 'publish') echo 'Publiée';
+                                            else echo ucfirst($status);
+                                            ?>
+                                        </span>
+                                    </td>
+                                    
+                                    <td class="fdap-col-actions fdap-actions-cell">
                                         <div class="fdap-actions-wrapper">
-                                            <?php if ($can_edit): ?>
-                                                <a href="<?php echo add_query_arg('fdap_id', $post_id, $form_url); ?>" class="fdap-action-btn fdap-btn-edit" title="Modifier">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/></svg>
-                                                </a>
-                                            <?php endif; ?>
+                                            <a href="<?php echo add_query_arg('fdap_id', $post_id, $form_url); ?>" class="fdap-action-btn fdap-btn-edit" title="Modifier">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/></svg>
+                                            </a>
                                             <a href="<?php the_permalink(); ?>" class="fdap-action-btn fdap-btn-view" title="Voir">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/></svg>
                                             </a>
@@ -283,8 +309,6 @@ class FDAP_Shortcodes {
                                             <?php endif; ?>
                                         </div>
                                     </td>
-
-
                                 </tr>
                             <?php endwhile; ?>
                         </tbody>
@@ -346,6 +370,7 @@ class FDAP_Shortcodes {
                 0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
                 50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
             }
+            .fdap-status--pending {
                 background: #fef3c7;
                 color: #d97706;
             }
@@ -616,7 +641,8 @@ class FDAP_Shortcodes {
         if (class_exists('UM')) {
             $login_page = get_page_by_path('login');
             if ($login_page) {
-                $login_url = add_query_arg('redirect_to', urlencode(get_permalink()), get_permalink($login_page));
+                $current_url = add_query_arg(null, null);
+                $login_url = add_query_arg('redirect_to', urlencode($current_url), get_permalink($login_page));
                 ob_start();
                 ?>
                 <div class="fdap-login-redirect">
@@ -847,7 +873,7 @@ class FDAP_Shortcodes {
                 <?php endif; ?>
                 
                 <form method="post" action="<?php echo esc_url(site_url('/wp-login.php')); ?>" class="fdap-login-form">
-                    <input type="hidden" name="redirect_to" value="<?php echo esc_url(get_permalink()); ?>">
+                    <input type="hidden" name="redirect_to" value="<?php echo esc_url(add_query_arg(null, null)); ?>">
                     
                     <div class="fdap-field-wrap">
                         <label for="fdap-user">Identifiant</label>

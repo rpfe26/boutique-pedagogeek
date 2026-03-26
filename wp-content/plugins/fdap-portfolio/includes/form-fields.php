@@ -407,25 +407,38 @@ $fichier_id = $is_edit ? get_post_meta($post_id, '_fdap_fichier', true) : 0;
         <?php endif; ?>
 
         <?php 
-            $current_url = $is_edit ? add_query_arg('fdap_id', $post_id, get_permalink()) : get_permalink();
-            // Switching to api.qrserver.com as Google Charts is deprecated and often blocked/unstable
+            // Use full current URL including query string to preserve fdap_id when scanning
+            $current_url = add_query_arg(null, null);
             $qr_url = "https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=" . urlencode($current_url);
         ?>
 
         <!-- QR Code Smartphone Bridge (React Style) -->
         <div class="fdap-section fdap-qr-bridge">
-
             <div class="fdap-section-body" style="display: flex; align-items: center; gap: 24px;">
-                <div style="flex: 1;">
-                    <h3><span>📱</span> Poursuivre sur smartphone</h3>
-
-                    <p style="margin: 0; color: #64748b; font-size: 0.9rem; line-height: 1.5;">
-                        Scannez ce QR Code pour ouvrir cette fiche sur votre téléphone. Très utile pour <b>prendre des photos en direct</b> !
-                    </p>
-                </div>
-                <div style="background: white; padding: 12px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                    <img src="<?php echo $qr_url; ?>" alt="QR Code" style="display: block; width: 110px; height: 110px;">
-                </div>
+                <?php if ($is_edit): ?>
+                    <div style="flex: 1;">
+                        <h3 style="margin-bottom: 20px; background: #818cf8; color: white; padding: 12px 20px; border-radius: 12px; display: inline-flex; align-items: center; gap: 12px; width: 100%; box-sizing: border-box;">
+                            <span style="font-size: 24px;">📱</span> 
+                            <span style="text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800;">Poursuivre sur smartphone</span>
+                        </h3>
+                        <p style="margin: 0; color: #64748b; font-size: 0.95rem; line-height: 1.5;">
+                            Scannez ce QR Code pour ouvrir cette fiche sur votre téléphone. Très utile pour <b>prendre des photos en direct</b> !
+                        </p>
+                    </div>
+                    <div style="background: white; padding: 12px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #f1f5f9;">
+                        <img src="<?php echo $qr_url; ?>" alt="QR Code" style="display: block; width: 110px; height: 110px;">
+                    </div>
+                <?php else: ?>
+                    <div style="flex: 1; padding: 20px 0;">
+                        <h3 style="margin-bottom: 12px; background: #6366f1; color: white; padding: 18px 25px; border-radius: 14px; display: flex; align-items: center; justify-content: center; gap: 15px; width: 100%; box-sizing: border-box; box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);">
+                            <span style="font-size: 28px;">☁️</span> 
+                            <span style="text-transform: uppercase; letter-spacing: 0.05em; font-weight: 850; font-size: 1.2rem;">Sauvegarde requise</span>
+                        </h3>
+                        <p style="color: #64748b; margin: 0; font-size: 1rem; line-height: 1.6; text-align: center; padding: 0 20px;">
+                            Enregistrez votre fiche pour activer la <b>synchronisation smartphone</b> et ajouter des photos.
+                        </p>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 

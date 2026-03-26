@@ -114,5 +114,35 @@ add_action('wp_enqueue_scripts', function() {
     }
 });
 
+/**
+ * AJAX Sauvegarde d'une compétence personnalisée
+ */
+add_action('wp_ajax_fdap_add_custom_competence', function() {
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'fdap_form_submit')) {
+        wp_send_json_error(['message' => 'Session expirée, veuillez rafraîchir la page.']);
+    }
+    
+    if (!is_user_logged_in()) {
+        wp_send_json_error(['message' => 'Vous devez être connecté.']);
+    }
+
+    $new_comp = sanitize_text_field($_POST['competence'] ?? '');
+    if (empty($new_comp) || $new_comp === 'Autre (à préciser)...') {
+        wp_send_json_error(['message' => 'Veuillez saisir un intitulé valide.']);
+    }
+
+    $customs = get_option('_fdap_custom_competencies', []);
+    if (!is_array($customs)) $customs = [];
+
+    if (!in_array($new_comp, $customs)) {
+        $customs[] = $new_comp;
+        update_option('_fdap_custom_competencies', $customs);
+        wp_send_json_success(['message' => 'Compétence ajoutée au référentiel !']);
+    } else {
+        wp_send_json_success(['message' => 'Déjà existant']); // On valide quand même
+    }
+});
+
+
 
 require_once FDAP_PLUGIN_DIR . 'includes/class-export.php';

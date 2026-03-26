@@ -1,0 +1,72 @@
+/* DERNIÈRE CHANCE : TABLEAU ULTRA-COMPACT ANTI-DÉBORDEMENT */
+
+/* On enlève toute limite de largeur minimale qui force le scroll */
+.fdap-table-wrapper {
+    width: 100% !important;
+    overflow-x: hidden !important; /* On empêche le scroll si possible */
+    background: #fff;
+    border-radius: 12px;
+}
+
+.fdap-table {
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: fixed !important; /* Très important pour forcer le respect des largeurs */
+    border-collapse: collapse !important;
+    font-size: 11px !important; /* Police mini pour que ça rentre */
+}
+
+/* Calcul des largeurs colonnes (Total 100%) */
+/* Élève(15%) Title(35%) Date(10%) Lieu(10%) Statut(12%) Actions(18%) */
+
+.fdap-table th, .fdap-table td {
+    padding: 8px 4px !important; /* Padding mini */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
+
+/* Définition des largeurs fixes pour éviter tout débordement */
+.fdap-table th:nth-child(1), .fdap-table td:nth-child(1) { width: 15%; } /* Élève */
+.fdap-table th:nth-child(2), .fdap-table td:nth-child(2) { width: 35%; white-space: normal; line-height: 1.2; } /* Titre */
+.fdap-table th:nth-child(3), .fdap-table td:nth-child(3) { width: 10%; } /* Date */
+.fdap-table th:nth-child(4), .fdap-table td:nth-child(4) { width: 8%; }  /* Lieu */
+.fdap-table th:nth-child(5), .fdap-table td:nth-child(5) { width: 14%; text-align: center; } /* Statut */
+.fdap-table th:nth-child(6), .fdap-table td:nth-child(6) { width: 18%; text-align: right; font-weight: 800; padding-right: 10px !important; } /* Actions */
+
+/* On réduit la taille des boutons pour qu'ils rentrent dans 18% */
+.fdap-action-btn {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 8px !important;
+    padding: 0 !important;
+    margin: 0 2px !important;
+}
+
+.fdap-action-btn svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+.fdap-actions-wrapper {
+    gap: 4px !important;
+    justify-content: flex-end;
+}
+
+/* Masquage intelligent des colonnes si l'écran est trop petit (< 1024px) */
+@media (max-width: 1024px) {
+    .fdap-table th:nth-child(3), .fdap-table td:nth-child(3), /* Date */
+    .fdap-table th:nth-child(4), .fdap-table td:nth-child(4)  /* Lieu */ {
+        display: none !important;
+    }
+    /* Redistribution des pourcentages */
+    .fdap-table th:nth-child(1), .fdap-table td:nth-child(1) { width: 25%; }
+    .fdap-table th:nth-child(2), .fdap-table td:nth-child(2) { width: 40%; }
+}
+
+@media (max-width: 768px) {
+    .fdap-table th:nth-child(1), .fdap-table td:nth-child(1) { display: none !important; } /* Cache Élève */
+    .fdap-table th:nth-child(2), .fdap-table td:nth-child(2) { width: 50%; } /* Titre */
+    .fdap-table th:nth-child(6), .fdap-table td:nth-child(6) { width: 30%; } /* Actions */
+}

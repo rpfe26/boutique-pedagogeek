@@ -1,0 +1,125 @@
+/* RE-STRUCTURE COMPLÈTE DU TABLEAU POUR ÉVITER LES CHEVAUCHEMENTS */
+
+.fdap-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background: white;
+    border-radius: 12px;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.fdap-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto !important; /* On laisse le navigateur gérer les largeurs intelligemment */
+    min-width: 850px; /* On force le scroll horizontal au lieu de chevaucher si c'est trop étroit */
+}
+
+.fdap-table th, .fdap-table td {
+    padding: 16px 12px !important;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.fdap-table thead th {
+    background: #4a86e8;
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    position: sticky;
+    top: 0;
+}
+
+/* Colonne Titre - Prend le maximum de place */
+.fdap-title-cell {
+    width: auto;
+}
+
+.fdap-title-cell a {
+    color: #1e293b;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    display: block;
+    line-height: 1.3;
+}
+
+/* Colonnes à largeur fixe minimale pour éviter de se rabougrir */
+.fdap-table td:nth-child(2), .fdap-table th:nth-child(2) { width: 110px; white-space: nowrap; } /* Date */
+.fdap-table td:nth-child(3), .fdap-table th:nth-child(3) { width: 80px; white-space: nowrap; }  /* Lieu */
+.fdap-table td:nth-child(4), .fdap-table th:nth-child(4) { width: 120px; text-align: center; } /* Statut */
+
+/* Colonne Actions - Doit TOUJOURS avoir assez de place */
+.fdap-actions-cell {
+    width: 170px !important;
+    white-space: nowrap;
+    text-align: right !important;
+    padding-right: 15px !important;
+}
+
+.fdap-actions-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    min-width: 150px; /* Sécurité anti-chevauchement */
+}
+
+/* Boutons d'action unifiés et propres */
+.fdap-action-btn {
+    width: 40px !important;
+    height: 40px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px !important;
+    color: white !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.fdap-btn-edit { background: #6366f1 !important; }
+.fdap-btn-view { background: #3b82f6 !important; }
+.fdap-btn-delete { 
+    background: white !important; 
+    color: #ef4444 !important; 
+    border: 1px solid #fee2e2 !important; 
+}
+
+.fdap-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.fdap-action-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* Badge de statut propre */
+.fdap-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+/* Responsive : On cache les colonnes moins importantes au lieu de chevaucher */
+@media (max-width: 1100px) {
+    .fdap-table th:nth-child(3), .fdap-table td:nth-child(3) { /* Cache Lieu */
+        display: none !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .fdap-table th:nth-child(2), .fdap-table td:nth-child(2) { /* Cache Date */
+        display: none !important;
+    }
+}

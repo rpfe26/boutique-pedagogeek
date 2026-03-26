@@ -69,12 +69,25 @@
     function startRecording(prefix, state) {
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then(function(stream) {
-                var types = ['audio/webm', 'audio/ogg', 'audio/mp4', 'audio/mpeg', 'audio/wav'];
+                var types = [
+                    'audio/webm;codecs=opus', 
+                    'audio/webm', 
+                    'audio/ogg;codecs=opus', 
+                    'audio/ogg', 
+                    'audio/mp4;codecs=mp4a',
+                    'audio/mp4',
+                    'audio/aac',
+                    'audio/wav'
+                ];
                 var mimeType = '';
                 for (var i = 0; i < types.length; i++) {
-                    if (MediaRecorder.isTypeSupported(types[i])) { mimeType = types[i]; break; }
+                    if (MediaRecorder.isTypeSupported(types[i])) { 
+                        mimeType = types[i]; 
+                        break; 
+                    }
                 }
                 var options = mimeType ? { mimeType: mimeType } : {};
+                log('Using mimeType: ' + (mimeType || 'default'));
                 state.mediaRecorder = new MediaRecorder(stream, options);
                 state.audioChunks = [];
                 
@@ -84,24 +97,35 @@
                 
                 state.mediaRecorder.addEventListener('stop', function() {
                     log('Stopping ' + prefix + '. Chunks length: ' + state.audioChunks.length);
+                    
                     if (state.audioChunks.length === 0) {
-                        log('No chunks collected for ' + prefix);
+                        alert("Erreur: Aucun flux audio n'a été capturé. Vérifiez que votre micro fonctionne.");
+                        ui(prefix, false);
+                        resetPauseBtn(prefix);
                         return;
                     }
-                    var blob = new Blob(state.audioChunks, { type: state.mediaRecorder.mimeType });
+
+                    var finalMime = state.mediaRecorder.mimeType || mimeType || 'audio/webm';
+                    var blob = new Blob(state.audioChunks, { type: finalMime });
                     var url = URL.createObjectURL(blob);
                     
                     var preview = document.getElementById('fdap-' + prefix + '-preview');
                     var audioEl = document.getElementById('fdap-' + prefix + '-audio');
                     var dataIn = document.getElementById('fdap-' + prefix + '-audio-data');
 
-                    if (audioEl) audioEl.src = url;
+                    if (audioEl) {
+                        audioEl.src = url;
+                        audioEl.load();
+                    }
                     if (preview) {
                         preview.style.setProperty('display', 'flex', 'important');
                     }
                     if (dataIn) {
                         var reader = new FileReader();
-                        reader.onloadend = function() { dataIn.value = reader.result; };
+                        reader.onloadend = function() { 
+                            dataIn.value = reader.result; 
+                            log(prefix + ' audio data ready (base64)');
+                        };
                         reader.readAsDataURL(blob);
                     }
                 });
@@ -119,25 +143,41 @@
                     var s = state.recSeconds % 60;
                     if (timer) timer.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
                 }, 1000);
-            }).catch(function(err) { log('Mic error', err); });
+            }).catch(function(err) { 
+                log('Mic error', err); 
+                var msg = "Impossible d'accéder au micro. ";
+                if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
+                    msg += "L'enregistrement audio nécessite une connexion sécurisée (HTTPS).";
+                } else {
+                    msg += "Veuillez vérifier les autorisations de votre navigateur.";
+                }
+                alert(msg);
+                ui(prefix, false);
+            });
     }
 
     function stopRecording(prefix, state) {
         log('stopRecording called for ' + prefix);
         if (!state.mediaRecorder) return;
+        
         clearInterval(state.recInterval);
         
         if (state.mediaRecorder.state !== 'inactive') {
-            state.mediaRecorder.requestData();
-            setTimeout(function() {
-                if (state.mediaRecorder.state !== 'inactive') {
+            try {
+                // On demande les dernières données pour être sûr
+                if (state.mediaRecorder.state === 'recording' || state.mediaRecorder.state === 'paused') {
                     state.mediaRecorder.stop();
                 }
-                if (state.mediaRecorder.stream) {
-                    state.mediaRecorder.stream.getTracks().forEach(function(t) { t.stop(); });
-                }
-            }, 100);
+            } catch(e) {
+                log('Error stopping recorder', e);
+            }
         }
+
+        // Arrêter tous les morceaux du flux micro pour éteindre le voyant
+        if (state.mediaRecorder.stream) {
+            state.mediaRecorder.stream.getTracks().forEach(function(t) { t.stop(); });
+        }
+
         ui(prefix, false);
         resetPauseBtn(prefix);
     }
@@ -181,6 +221,9 @@
      */
     function initGeneralUploads() {
         document.querySelectorAll('.fdap-hidden-input').forEach(function (input) {
+            // Ignorer les photos qui ont déjà leur propre gestionnaire
+            if (input.getAttribute('name') && input.getAttribute('name').indexOf('fdap_photo_') !== -1) return;
+            
             input.addEventListener('change', function () {
                 var box = this.closest('.fdap-upload-box');
                 if (box && this.files.length > 0) {
@@ -255,12 +298,22 @@
             badge.onclick = function() {
                 previewEl.style.display = 'none';
                 previewEl.innerHTML = '';
-                if (input) input.value = '';
+                if (input) {
+                    input.value = '';
+                    var box = input.closest('.fdap-upload-box');
+                    if (box) box.style.display = 'flex';
+                }
             };
             
             previewEl.appendChild(img);
             previewEl.appendChild(badge);
             previewEl.style.display = 'block';
+
+            // Masquer le cadre de téléchargement
+            if (input) {
+                var box = input.closest('.fdap-upload-box');
+                if (box) box.style.display = 'none';
+            }
         };
         reader.readAsDataURL(file);
     }
@@ -272,6 +325,13 @@
             var keepInput = preview.querySelector('.fdap-keep-photo');
             if (keepInput) keepInput.value = '';
             preview.style.display = 'none';
+            
+            // Réafficher le cadre de téléchargement s'il existe
+            var item = preview.closest('.fdap-photo-item');
+            if (item) {
+                var box = item.querySelector('.fdap-upload-box');
+                if (box) box.style.display = 'flex';
+            }
         }
     };
 

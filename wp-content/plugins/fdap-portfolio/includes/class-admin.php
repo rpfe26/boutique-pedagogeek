@@ -73,7 +73,10 @@ class FDAP_Admin {
 
         ?>
         <div class="wrap">
-            <h1>👥 Fiches par élève (<?php echo $count_authors; ?> élèves)</h1>
+            <h1 style="display: flex; align-items: center; gap: 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#4f46e5" viewBox="0 0 16 16"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path fill-rule="evenodd" d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>
+                Fiches par élève (<?php echo $count_authors; ?> élèves)
+            </h1>
             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px;">
                 <?php if ($count_authors > 0): ?>
                     <?php foreach ($authors_data as $data): 
@@ -109,7 +112,10 @@ class FDAP_Admin {
                                         <div class="fdap-progress-fill" style="width: <?php echo $stats['percent']; ?>%;"></div>
                                     </div>
                                     <div class="fdap-tracker-meta">
-                                        <span>🎯 CAP EPC</span>
+                                        <span style="display: flex; align-items: center; gap: 4px;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 13A5 5 0 1 1 8 3a5 5 0 0 1 0 10zm0 1A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/><path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M9.5 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg>
+                                            CAP EPC
+                                        </span>
                                         <span><?php echo $stats['treated']; ?> / <?php echo $stats['total']; ?></span>
                                     </div>
                                 </div>
@@ -137,8 +143,11 @@ class FDAP_Admin {
                                     'fdap_switch_user_' . $user->ID
                                 );
                                 ?>
-                                <a href="<?php echo esc_url($switch_url); ?>" class="button" title="Prendre le rôle de cet élève">👤 Jouer le rôle</a>
-                                <a href="<?php echo esc_url($edit_url); ?>" class="button button-primary">Détails →</a>
+                                <a href="<?php echo esc_url($switch_url); ?>" class="button" title="Prendre le rôle de cet élève" style="display: inline-flex; align-items: center; gap: 6px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg>
+                                    Rôle
+                                </a>
+                                <a href="<?php echo esc_url($edit_url); ?>" class="button button-primary">Détails</a>
                             </div>
                         </div>
                     </div>
@@ -216,12 +225,15 @@ class FDAP_Admin {
             $current_user = wp_get_current_user();
             $back_url = add_query_arg('fdap_switch_back', '1', home_url());
             ?>
-            <div style="position: fixed; top: 0; left: 0; right: 0; background: #6366f1; color: white; padding: 12px; text-align: center; z-index: 999999; font-family: sans-serif; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-bottom: 2px solid rgba(255,255,255,0.2);">
-                <span style="font-size: 1.1em;">👤 Vous jouez le rôle de : <strong><?php echo esc_html($current_user->display_name); ?></strong></span>
-                <a href="<?php echo esc_url($back_url); ?>" style="color: #fff; margin-left: 20px; background: #ef4444; padding: 8px 18px; border-radius: 6px; text-decoration: none; font-weight: 900; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 10px rgba(0,0,0,0.3); text-transform: uppercase; font-size: 13px;">
-                    🚪 Quitter le rôle
+            <div style="position: fixed; top: 0; left: 0; right: 0; background: #6366f1; color: white; padding: 12px; text-align: center; z-index: 999999; font-family: sans-serif; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border-bottom: 2px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; gap: 15px;">
+                <span style="font-size: 1.1em; display: flex; align-items: center; gap: 8px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg>
+                    Vous jouez le rôle de : <strong><?php echo esc_html($current_user->display_name); ?></strong>
+                </span>
+                <a href="<?php echo esc_url($back_url); ?>" style="color: #fff; background: #ef4444; padding: 8px 18px; border-radius: 6px; text-decoration: none; font-weight: 900; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 10px rgba(0,0,0,0.3); text-transform: uppercase; font-size: 12px; display: flex; align-items: center; gap: 6px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/><path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/></svg>
+                    Quitter le rôle
                 </a>
-
             </div>
             <style>body { padding-top: 50px !important; }</style>
 
@@ -432,21 +444,27 @@ class FDAP_Admin {
 
             <div class="fdap-stats-grid">
                 <a href="?page=fdap-dashboard&status_filter=publish" class="fdap-stat-card">
-                    <div class="fdap-stat-icon" style="background: #eef2ff; color: #4f46e5;">📤</div>
+                    <div class="fdap-stat-icon" style="background: #eef2ff; color: #4f46e5;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/></svg>
+                    </div>
                     <div class="fdap-stat-info">
                         <h3><?php echo $count_publish; ?></h3>
                         <p>À contrôler</p>
                     </div>
                 </a>
                 <a href="?page=fdap-dashboard&status_filter=controlled" class="fdap-stat-card">
-                    <div class="fdap-stat-icon" style="background: #ecfdf5; color: #10b981;">✅</div>
+                    <div class="fdap-stat-icon" style="background: #ecfdf5; color: #10b981;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
+                    </div>
                     <div class="fdap-stat-info">
                         <h3><?php echo $count_controlled; ?></h3>
                         <p>Contrôlées</p>
                     </div>
                 </a>
                 <div class="fdap-stat-card">
-                    <div class="fdap-stat-icon" style="background: #fff7ed; color: #f97316;">👥</div>
+                    <div class="fdap-stat-icon" style="background: #fff7ed; color: #f97316;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.004H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+                    </div>
                     <div class="fdap-stat-info">
                         <h3><?php echo count($authors); ?></h3>
                         <p>Élèves inscrits</p>
@@ -502,9 +520,15 @@ class FDAP_Admin {
                             <td><?php echo get_the_modified_date("d/m/Y à H:i"); ?></td>
                             <td><span class="fdap-status-pill <?php echo $status_class; ?>"><?php echo $status_label; ?></span></td>
                             <td style="display: flex; gap: 6px; align-items: center;">
-                                <a href="<?php echo esc_url(add_query_arg(['fdap_id' => $post_id], get_permalink(get_page_by_path('fdap-2')))); ?>" class="button" style="background: #6366f1; color: white; border: none; width: 34px; height: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 16px;" title="Modifier">✏️</a>
-                                <a href="<?php the_permalink(); ?>" target="_blank" class="button" style="background: #3b82f6; color: white; border: none; width: 34px; height: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 16px;" title="Voir">👁</a>
-                                <a href="<?php echo wp_nonce_url(add_query_arg(['action' => 'delete', 'fdap_id' => $post_id], get_permalink(get_page_by_path('mes-fdap'))), 'fdap_delete_' . $post_id); ?>" class="button" style="background: #ef4444; color: white; border: none; width: 34px; height: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 16px;" onclick="return confirm('Supprimer cette fiche ?')" title="Supprimer">🗑</a>
+                                <a href="<?php echo esc_url(add_query_arg(['fdap_id' => $post_id], get_permalink(get_page_by_path('fdap-2')))); ?>" class="button" style="background: #6366f1; color: white; border: none; width: 34px; height: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" title="Modifier">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/></svg>
+                                </a>
+                                <a href="<?php the_permalink(); ?>" target="_blank" class="button" style="background: #3b82f6; color: white; border: none; width: 34px; height: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" title="Voir">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/></svg>
+                                </a>
+                                <a href="<?php echo wp_nonce_url(add_query_arg(['action' => 'delete', 'fdap_id' => $post_id], get_permalink(get_page_by_path('mes-fdap'))), 'fdap_delete_' . $post_id); ?>" class="button" style="background: #ef4444; color: white; border: none; width: 34px; height: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center;" onclick="return confirm('Supprimer cette fiche ?')" title="Supprimer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
+                                </a>
                             </td>
 
 

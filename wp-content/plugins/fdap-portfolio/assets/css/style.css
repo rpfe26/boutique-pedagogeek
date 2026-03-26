@@ -212,8 +212,8 @@
 
 @media (min-width: 768px) {
     .fdap-form-container {
-        max-width: 800px;
-        padding: 40px 32px;
+        max-width: 1100px;
+        padding: 50px 48px;
     }
 }
 
@@ -1508,4 +1508,256 @@
         padding: 8px 16px;
         font-size: 13px;
     }
+}
+
+/* ============================================
+   TABLEAU DE BORD - BOUTONS COMPACTS
+   ============================================ */
+.fdap-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+.fdap-actions-cell {
+    text-align: right !important;
+    white-space: nowrap;
+    width: 1%;
+}
+
+.fdap-actions-wrapper {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.fdap-action-btn {
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+.fdap-btn-edit { background: #6366f1; }
+.fdap-btn-edit:hover { background: #4f46e5; transform: translateY(-1px); }
+
+.fdap-btn-view { background: #3b82f6; }
+.fdap-btn-view:hover { background: #2563eb; transform: translateY(-1px); }
+
+.fdap-btn-delete { 
+    background: #fff; 
+    color: #ef4444;
+    border: 1px solid #fee2e2;
+    padding: 0;
+    width: 34px;
+}
+.fdap-btn-delete:hover { background: #fee2e2; color: #dc2626; }
+
+/* Masquage du texte des boutons sur les écrans moyens/petits pour gagner de la place */
+@media (max-width: 1150px) {
+    .fdap-btn-text {
+        display: none;
+    }
+    .fdap-action-btn {
+        width: 34px;
+        padding: 0;
+        gap: 0;
+    }
+}
+
+/* Ajustements pour colonnes de statut */
+.fdap-status {
+    padding: 6px 12px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .fdap-dashboard table th:nth-child(4), 
+    .fdap-dashboard table td:nth-child(4) {
+        display: none; /* Masquer le Lieu sur mobile pour gagner de la place */
+    }
+}
+
+/* ============================================
+   AJUSTEMENTS FINAUX DASHBOARD & TABLEAU
+   ============================================ */
+
+/* Sécurité pour headers de thèmes collants */
+.fdap-main-wrapper {
+    margin-top: 40px !important;
+    position: relative;
+    z-index: 10;
+}
+
+/* On s'assure que le contenu est bien centré et ne déborde pas */
+.fdap-dashboard {
+    max-width: 100% !important;
+    padding: 30px 20px !important;
+    box-sizing: border-box;
+}
+
+/* Gestion du tableau scrollable sur mobile/petits écrans */
+.fdap-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #f1f5f9;
+    margin-top: 20px;
+}
+
+.fdap-table {
+    width: 100%;
+    min-width: 800px; /* Force scroll si trop étroit */
+    border-collapse: collapse;
+}
+
+/* Cellules d'actions - Optimisées */
+.fdap-actions-cell {
+    padding: 12px 15px !important;
+    text-align: right !important;
+    width: 1%;
+}
+
+.fdap-actions-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+/* On force le masquage du texte plus tôt car l'utilisateur a des problèmes */
+@media (max-width: 1250px) {
+    .fdap-btn-text {
+        display: none !important;
+    }
+    .fdap-action-btn {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        justify-content: center;
+        gap: 0;
+    }
+}
+
+/* Ajustements pour les cartes de compétences */
+.fdap-student-tracker-v2 {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+@media (max-width: 640px) {
+    .fdap-poles-grid {
+        grid-template-columns: 1fr !important;
+        padding: 15px !important;
+    }
+}
+
+/* ============================================
+   AFFICHAGE LARGE (FULL WIDTH) POUR PC
+   ============================================ */
+.fdap-main-wrapper {
+    max-width: 95% !important; /* Utilise presque toute la largeur de l'écran */
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.fdap-dashboard, .fdap-form-container, .fdap-view {
+    max-width: 1400px !important; /* Limite généreuse pour les très grands écrans */
+    width: 100% !important;
+}
+
+/* Optimisation des colonnes du tableau pour utiliser le gain de place */
+.fdap-table th, .fdap-table td {
+    padding: 15px 20px !important;
+}
+
+.fdap-title-cell {
+    width: auto !important; /* L'activité prend le reste de la place */
+}
+
+.fdap-author-cell {
+    width: 150px;
+}
+
+.fdap-actions-cell {
+    width: 180px !important; /* On redonne un peu d'espace aux actions si l'écran est large */
+}
+
+/* On réaffiche le texte des boutons si l'écran est très large (> 1300px) */
+@media (min-width: 1300px) {
+    .fdap-btn-text {
+        display: inline !important;
+    }
+    .fdap-action-btn {
+        width: auto !important;
+        padding: 0 15px !important;
+        gap: 8px !important;
+    }
+}
+
+/* ============================================
+   ULTRA-COMPACT DASHBOARD (PLUS DE SCROLL)
+   ============================================ */
+
+/* On réduit la taille de police de base du tableau */
+.fdap-table {
+    font-size: 13px !important;
+}
+
+.fdap-table th, .fdap-table td {
+    padding: 10px 12px !important; /* Moins de padding */
+}
+
+/* On force le titre à pouvoir se couper si vraiment trop long */
+.fdap-title-cell {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Statuts plus compacts */
+.fdap-status {
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+}
+
+/* Masquage agressid des colonnes secondaires sur écrans moyens */
+@media (max-width: 1024px) {
+    /* Masquer le Date ET le Lieu sur écrans moyens pour que l'essentiel tienne sans scroll */
+    .fdap-table th:nth-child(2), .fdap-table td:nth-child(2), /* Date */
+    .fdap-table th:nth-child(3), .fdap-table td:nth-child(3)  /* Lieu */ {
+        display: none !important;
+    }
+}
+
+/* Réduction des boutons pour PC standard */
+.fdap-action-btn {
+    height: 30px !important;
+    font-size: 12px !important;
+    padding: 0 8px !important;
+}
+
+.fdap-action-btn svg {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+/* On s'assure que le wrapper ne bloque pas la largeur */
+.fdap-main-wrapper {
+    width: 100% !important;
+    padding: 0 !important;
+    overflow: visible !important;
 }

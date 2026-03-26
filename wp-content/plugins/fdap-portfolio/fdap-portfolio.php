@@ -58,7 +58,8 @@ add_filter('single_template', function($template) {
 // Activation
 register_activation_hook(__FILE__, function() {
     require_once FDAP_PLUGIN_DIR . 'includes/class-post-type.php';
-    FDAP_Post_Type::register();
+    $pt = new FDAP_Post_Type();
+    $pt->register();
     flush_rewrite_rules();
 });
 

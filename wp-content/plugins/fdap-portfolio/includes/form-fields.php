@@ -125,11 +125,11 @@ $fichier_id = $is_edit ? get_post_meta($post_id, '_fdap_fichier', true) : 0;
                 <div class="fdap-grid-2">
                     <div class="fdap-field">
                         <label>Contraintes financières / temps</label>
-                        <input type="text" name="fdap_contraintes" value="<?php echo esc_attr($values['contraintes'] ?? ''); ?>" placeholder="Délais, ressources...">
+                        <textarea name="fdap_contraintes" rows="2" placeholder="Délais, ressources..."><?php echo esc_textarea($values['contraintes'] ?? ''); ?></textarea>
                     </div>
                     <div class="fdap-field">
                         <label>Consignes recommandées</label>
-                        <textarea name="fdap_consignes_recues" rows="1" placeholder="Instructions données..."><?php echo esc_textarea($values['consignes_recues'] ?? ''); ?></textarea>
+                        <textarea name="fdap_consignes_recues" rows="2" placeholder="Instructions données..."><?php echo esc_textarea($values['consignes_recues'] ?? ''); ?></textarea>
                     </div>
                 </div>
             </div>

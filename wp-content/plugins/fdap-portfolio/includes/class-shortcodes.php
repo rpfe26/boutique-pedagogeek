@@ -268,12 +268,10 @@ class FDAP_Shortcodes {
                                             <?php if ($can_edit): ?>
                                                 <a href="<?php echo add_query_arg('fdap_id', $post_id, $form_url); ?>" class="fdap-action-btn fdap-btn-edit" title="Modifier">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/></svg>
-                                                    <span class="fdap-btn-text">Modifier</span>
                                                 </a>
                                             <?php endif; ?>
                                             <a href="<?php the_permalink(); ?>" class="fdap-action-btn fdap-btn-view" title="Voir">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/></svg>
-                                                <span class="fdap-btn-text">Voir</span>
                                             </a>
                                             <?php if ($post_author_id == $current_user_id || current_user_can('delete_others_posts')): ?>
                                                 <a href="<?php echo wp_nonce_url(add_query_arg(['action' => 'delete', 'fdap_id' => $post_id]), 'fdap_delete_' . $post_id); ?>" class="fdap-action-btn fdap-btn-delete" onclick="return confirm('Supprimer cette fiche ?')" title="Supprimer">

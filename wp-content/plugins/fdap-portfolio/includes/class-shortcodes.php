@@ -69,8 +69,6 @@ class FDAP_Shortcodes {
                 }
             }
         }
-        $values = [];
-        
         if ($post_id) {
             $post = get_post($post_id);
             // Admins can edit any fiche, students only their own
@@ -82,6 +80,11 @@ class FDAP_Shortcodes {
             } else {
                 return '<div class="fdap-error">Vous n\'êtes pas autorisé à modifier cette fiche.</div>';
             }
+        } else {
+            // New fiche: prefill name and date
+            $user = wp_get_current_user();
+            $values['nom_prenom'] = $user->display_name;
+            $values['date_de_saisie'] = current_time('Y-m-d');
         }
         
         ob_start();

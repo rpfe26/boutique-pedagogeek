@@ -257,7 +257,7 @@ class FDAP_Shortcodes {
                                         </td>
                                     <?php endif; ?>
                                     <td class="fdap-title-cell">
-                                        <a href="<?php the_permalink(); ?>" class="fdap-link" style="font-weight: 700; color: #1e293b;"><?php echo esc_html($nom ?: get_the_title()); ?></a>
+                                        <a href="<?php the_permalink(); ?>" class="fdap-link" style="font-weight: 700; color: #1e293b;"><?php echo esc_html(get_the_title() ?: 'Sans titre'); ?></a>
                                     </td>
 
                                     <td><?php echo get_the_date('d/m/Y'); ?></td>

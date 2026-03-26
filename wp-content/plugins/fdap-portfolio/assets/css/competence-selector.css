@@ -231,7 +231,6 @@
 
 .fdap-custom-input-box button:hover {
     background: var(--fdap-primary-dark);
-    transform: translateY(-1px);
 }
 
 .fdap-custom-input-box button:disabled {

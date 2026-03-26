@@ -24,6 +24,14 @@ $fichier_id = $is_edit ? get_post_meta($post_id, '_fdap_fichier', true) : 0;
                 Fiche enregistrée avec succès ! ✅
             </div>
         <?php endif; ?>
+
+        <!-- Barre de navigation rapide -->
+        <div class="fdap-form-nav-top">
+            <a href="<?php echo get_permalink(get_page_by_path('mes-fdap')); ?>" class="fdap-nav-back-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/></svg>
+                Retour à la gestion des fiches
+            </a>
+        </div>
         
         <!-- Titre de l'activité (React Style) -->
         <div class="fdap-title-card">
@@ -104,7 +112,7 @@ $fichier_id = $is_edit ? get_post_meta($post_id, '_fdap_fichier', true) : 0;
                 <div class="fdap-grid-2">
                     <div class="fdap-field">
                         <label>Degré d'autonomie</label>
-                        <select name="fdap_autonomie" class="fdap-select">
+                        <select name="fdap_autonomie" class="fdap-select fdap-select-blue">
                             <option value="">-- Sélectionner --</option>
                             <option value="1" <?php selected($values['autonomie'] ?? '', 1); ?>>★ Assisté</option>
                             <option value="2" <?php selected($values['autonomie'] ?? '', 2); ?>>★★ Guidé</option>
@@ -176,7 +184,7 @@ $fichier_id = $is_edit ? get_post_meta($post_id, '_fdap_fichier', true) : 0;
                         </select>
                     </div>
                     <div class="fdap-field">
-                        <label>Plaisir ressenti</label>
+                        <label>Intérêt de la tâche</label>
                         <select name="fdap_plaisir_" class="fdap-select">
                             <option value="">-- Sélectionner --</option>
                             <option value="1" <?php selected($values['plaisir_'] ?? '', 1); ?>>★ Pas du tout</option>
@@ -345,7 +353,7 @@ $fichier_id = $is_edit ? get_post_meta($post_id, '_fdap_fichier', true) : 0;
             </div>
         </div>
         
-        <!-- Commentaires du professeur (Admin uniquement) -->
+        <!-- Section Évaluation Professeur (Teacher Console) -->
         <?php if (current_user_can('edit_others_posts')): ?>
         <?php
         global $post;
@@ -353,53 +361,69 @@ $fichier_id = $is_edit ? get_post_meta($post_id, '_fdap_fichier', true) : 0;
         $existing_comments = $post_id ? get_post_meta($post_id, '_fdap_comments', true) : [];
         if (!is_array($existing_comments)) $existing_comments = [];
         ?>
-        <div class="fdap-section fdap-teacher-section" id="fdap-comments-section">
-            <h3><span>📝</span> Commentaires Du Professeur</h3>
+        <div class="fdap-section fdap-teacher-console fdap-compact-console" id="fdap-teacher-console">
+            <h3 class="fdap-teacher-mode-header mini-header">
+                <span onclick="document.getElementById('fdap-teacher-console').classList.toggle('is-minimized')" style="cursor:pointer; flex:1;">🎓 Console Professeur</span>
+                
+                <div class="header-status-select">
+                    <select name="post_status" class="fdap-status-select-mini">
+                        <option value="publish" <?php selected($status, 'publish'); ?>>🕒 À revoir</option>
+                        <option value="controlled" <?php selected($status, 'controlled'); ?>>✅ Validé</option>
+                    </select>
+                </div>
 
-
-            <div class="fdap-section-body" style="padding: 20px; background: #fff;">
+                <button type="button" class="fdap-console-min-btn" onclick="document.getElementById('fdap-teacher-console').classList.toggle('is-minimized')" title="Réduire/Agrandir">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8z"/></svg>
+                </button>
+            </h3>
+            
+            <div class="fdap-section-body mini-body">
                 <?php if (!empty($existing_comments)): ?>
-                <div class="fdap-comments-history" style="margin-bottom: 25px; display: block !important; width: 100% !important;">
-                    <h4 style="font-size: 15px; color: #666; margin-bottom: 12px; display: block; border-bottom: 1px solid #eee; padding-bottom: 8px;">Historique (<?php echo count($existing_comments); ?>) :</h4>
-                    <?php $c_idx = 0; foreach (array_reverse($existing_comments) as $comment): $orig_idx = count($existing_comments) - 1 - $c_idx; ?>
-                    <div class="fdap-comment-entry" style="background: #fff; border-left: 5px solid #f59e0b; padding: 15px; margin-bottom: 15px; border-radius: 8px; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: block !important; width: 100% !important; clear: both !important; box-sizing: border-box !important;">
-                        <button type="submit" name="fdap_delete_comment" value="<?php echo $orig_idx; ?>" style="position: absolute; top: 10px; right: 10px; background: #fee2e2; color: #dc2626; border: none; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; transition: all 0.2s;" title="Supprimer ce commentaire" onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">×</button>
-                        <div style="font-size: 12px; color: #888; margin-bottom: 8px; font-weight: 600; display: block;">📅 <?php echo date('d/m/Y à H:i', strtotime($comment['date'])); ?></div>
-                        <?php if (!empty($comment['text'])): ?>
-                            <div style="margin-bottom: 10px; line-height: 1.5; color: #334155; font-size: 14px; word-wrap: break-word; display: block;"><?php echo nl2br(esc_html($comment['text'])); ?></div>
-                        <?php endif; ?>
-                        <?php if (!empty($comment['audio_id'])): 
-                            $audio_url = wp_get_attachment_url($comment['audio_id']); 
-                        ?>
-                            <div style="display: block; margin-top: 5px;"><audio controls style="max-width: 100%; height: 35px;"><source src="<?php echo esc_url($audio_url); ?>"></audio></div>
-                        <?php endif; ?>
+                <div class="fdap-history-log-container" id="fdap-history-log">
+                    <label class="fdap-small-label" onclick="document.getElementById('fdap-history-log').classList.toggle('is-collapsed')" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+                        <span>📜 Historique des échanges (<?php echo count($existing_comments); ?>)</span>
+                        <span class="toggle-icon">↕</span>
+                    </label>
+                    <div class="fdap-history-scroll-box">
+                        <?php $c_idx = 0; foreach (array_reverse($existing_comments) as $comment): $orig_idx = count($existing_comments) - 1 - $c_idx; ?>
+                        <div class="fdap-mini-comment">
+                            <div class="mini-meta">
+                                <span>📅 <?php echo date('d/m/Y H:i', strtotime($comment['date'])); ?></span>
+                                <button type="submit" name="fdap_delete_comment" value="<?php echo $orig_idx; ?>" class="mini-del">×</button>
+                            </div>
+                            <div class="mini-body"><?php echo nl2br(esc_html($comment['text'])); ?></div>
+                            <?php if (!empty($comment['audio_id'])): 
+                                $audio_url = wp_get_attachment_url($comment['audio_id']); 
+                            ?>
+                                <audio controls style="height: 24px; width: 100%; margin-top: 5px;"><source src="<?php echo esc_url($audio_url); ?>"></audio>
+                            <?php endif; ?>
+                        </div>
+                        <?php $c_idx++; endforeach; ?>
                     </div>
-                    <?php $c_idx++; endforeach; ?>
                 </div>
                 <?php endif; ?>
 
-                <div class="fdap-new-comment" style="background: #fffbeb; padding: 15px; border-radius: 8px; border: 1px dashed #f59e0b;">
-                    <h4 style="font-size: 14px; color: #92400e; margin: 0 0 10px 0;">Ajouter un commentaire :</h4>
-                    <div class="fdap-field" style="margin-bottom: 15px;">
-                        <label style="font-weight: 600; color: #333; display: block; margin-bottom: 5px;">Commentaire texte</label>
-                        <textarea name="fdap_comment_text" rows="3" style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px;" placeholder="Commentaire..."></textarea>
-                    </div>
-                    <div class="fdap-field" style="margin-bottom: 15px;">
-                        <label style="font-weight: 600; color: #333; display: block; margin-bottom: 5px;">Commentaire audio</label>
-                        <div style="display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; align-items: center;">
-                            <button type="button" class="fdap-record-btn" id="fdap-teacher-record-btn" style="padding: 6px 14px; font-size: 13px; display: inline-flex; align-items: center; gap: 6px;">🎤 Enregistrer</button>
-                            <button type="button" id="fdap-teacher-pause-btn" style="display:none; background: #f59e0b; color: #fff; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600; align-items: center;">⏸ Pause</button>
-                            <button type="button" class="fdap-stop-btn" id="fdap-teacher-stop-btn" style="display:none; padding: 6px 12px; font-size: 12px; align-items: center;">⏹ Stop</button>
-                            <span id="fdap-teacher-recording-indicator" style="display:none; align-items: center; gap: 6px; font-size: 12px; color: #ef4444; font-weight: 600;">
-                                <span style="display:inline-block; width:10px; height:10px; background:#ef4444; border-radius:50%; animation: fdap-blink 1s infinite;"></span>
-                                <span id="fdap-teacher-timer">00:00</span>
+                <div class="fdap-comment-input-area mini-input">
+                    <textarea name="fdap_comment_text" rows="2" placeholder="Votre avis ici..."></textarea>
+                    
+                    <div class="fdap-comment-toolbar mini-toolbar">
+                        <div class="fdap-teacher-audio-zone standardized-audio">
+                            <!-- Enregistreur Standardisé Professeur -->
+                            <button type="button" class="fdap-record-btn fdap-btn-dictation" id="fdap-teacher-record-btn">🎤 Dicter</button>
+                            <button type="button" id="fdap-teacher-pause-btn" style="display:none;" class="fdap-pause-btn">⏸ Pause</button>
+                            <button type="button" id="fdap-teacher-stop-btn" style="display:none;" class="fdap-stop-btn">⏹ Stop</button>
+                            
+                            <span id="fdap-teacher-recording-indicator" style="display:none;" class="fdap-rec-status">
+                                <span class="blink-dot"></span> <span id="fdap-teacher-timer">00:00</span>
                             </span>
+
+                            <div class="fdap-preview-row" id="fdap-teacher-preview" style="display: none;">
+                                <audio id="fdap-teacher-audio" controls style="height: 28px; width: 120px;"></audio>
+                                <button type="button" class="fdap-clear-btn" id="fdap-teacher-clear-btn">🗑</button>
+                            </div>
+                            <input type="hidden" name="fdap_comment_audio_data" id="fdap-teacher-audio-data">
                         </div>
-                        <div class="fdap-preview-row" id="fdap-teacher-preview" style="display: none; margin-top: 10px; background: transparent; padding: 0;">
-                            <audio id="fdap-teacher-audio" controls style="flex: 1; max-width: 200px; height: 36px;"></audio>
-                            <button type="button" class="fdap-clear-btn" id="fdap-teacher-clear-btn" style="font-size: 12px; padding: 4px 8px;">🗑</button>
-                        </div>
-                        <input type="hidden" name="fdap_comment_audio_data" id="fdap-teacher-audio-data">
+                        <button type="submit" class="fdap-btn-save-comment fdap-btn-mini">Envoyer</button>
                     </div>
                 </div>
             </div>

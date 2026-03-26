@@ -148,6 +148,15 @@ while (have_posts()) : the_post();
             </section>
 
             <section class="fdap-section">
+                <h3 class="fdap-section-title">📊 Bilan Personnel</h3>
+                <div class="fdap-section-content">
+                    <div class="fdap-field"><label class="fdap-field-label">Difficulté (1-5)</label><div class="fdap-field-value"><?php echo fdap_render_stars($values['difficulte'] ?? 0); ?></div></div>
+                    <div class="fdap-field"><label class="fdap-field-label">Intérêt de la tâche (1-5)</label><div class="fdap-field-value"><?php echo fdap_render_stars($values['plaisir_'] ?? 0); ?></div></div>
+                    <div class="fdap-field"><label class="fdap-field-label">Points forts / Améliorations</label><div class="fdap-field-value"><?php echo !empty($values['ameliorations']) ? nl2br(esc_html($values['ameliorations'])) : '—'; ?></div></div>
+                </div>
+            </section>
+
+            <section class="fdap-section">
                 <h3 class="fdap-section-title">🎥 Multimédia</h3>
                 <div class="fdap-section-content">
                     <?php if ($audio_id): ?><div class="fdap-media"><label class="fdap-field-label">Audio</label><audio controls><source src="<?php echo esc_url(wp_get_attachment_url($audio_id)); ?>"></audio></div><?php endif; ?>

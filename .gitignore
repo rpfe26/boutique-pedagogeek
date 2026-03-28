@@ -9,3 +9,4 @@ wp-content/wpvivid_staging/
 
 # Uploads (synced from production, not in git)
 # wp-content/uploads/2026/
+wp-content/debug.log

@@ -54,5 +54,5 @@ echo -e "${BLUE}Pour importer la DB:${NC}"
 echo -e "  gunzip -c database-backup.sql.gz | mysql -u root wordpress"
 echo ""
 
-# Lancer PHP
-php -S 0.0.0.0:$PORT
+# Lancer PHP avec router.php comme routeur pour les permaliens ET les fichiers statiques
+php -d max_execution_time=300 -S 0.0.0.0:$PORT router.php

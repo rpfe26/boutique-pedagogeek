@@ -22,6 +22,7 @@ add_action('plugins_loaded', function() {
     require_once FDAP_PLUGIN_DIR . 'includes/class-shortcodes.php';
     require_once FDAP_PLUGIN_DIR . 'includes/class-admin.php';
     require_once FDAP_PLUGIN_DIR . 'includes/helpers.php';
+    require_once FDAP_PLUGIN_DIR . 'includes/class-integration.php'; // Nouveau
     
     // Register CPT
     new FDAP_Post_Type();
@@ -31,6 +32,9 @@ add_action('plugins_loaded', function() {
     
     // Admin & impersonation features
     new FDAP_Admin();
+
+    // Integration & Independence features (Themes independent)
+    new FDAP_Integration();
 
 }, 20);
 

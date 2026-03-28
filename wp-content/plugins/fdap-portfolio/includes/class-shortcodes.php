@@ -139,6 +139,12 @@ class FDAP_Shortcodes {
         $current_user_id = get_current_user_id();
         $is_admin = current_user_can('edit_others_posts');
         
+        // Redirect admin to back-end dashboard if on front-end
+        if ($is_admin && !is_admin()) {
+            wp_redirect(admin_url('admin.php?page=fdap-dashboard'));
+            exit;
+        }
+        
         // Filter by author (admin only)
         $author_filter = 0;
         if ($is_admin && isset($_GET['author_filter'])) {
@@ -186,6 +192,9 @@ class FDAP_Shortcodes {
             <div class="fdap-dashboard-top-bar">
                 <div class="fdap-header-title">
                     <h2><?php echo $is_admin && !$author_filter ? 'Toutes les fiches FDAP' : 'Mes fiches'; ?></h2>
+                    <?php if ($is_admin && $author_filter): ?>
+                        <a href="<?php echo get_permalink(); ?>" class="fdap-btn-view-all" style="font-size: 13px; color: #6366f1; text-decoration: none; margin-left: 15px; font-weight: 700;">← Voir toutes les fiches</a>
+                    <?php endif; ?>
                 </div>
                 <div class="fdap-header-actions">
                     <?php if ($is_admin): ?>

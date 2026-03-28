@@ -363,7 +363,10 @@ $fichier_id = $is_edit ? get_post_meta($post_id, '_fdap_fichier', true) : 0;
         ?>
         <div class="fdap-section fdap-teacher-console fdap-compact-console" id="fdap-teacher-console">
             <h3 class="fdap-teacher-mode-header mini-header">
-                <span onclick="document.getElementById('fdap-teacher-console').classList.toggle('is-minimized')" style="cursor:pointer; flex:1;">🎓 Console Professeur</span>
+                <div style="flex:1; display:flex; align-items:center; gap:10px;">
+                    <span onclick="document.getElementById('fdap-teacher-console').classList.toggle('is-minimized')" style="cursor:pointer;">🎓 Console Professeur</span>
+                    <a href="<?php echo get_permalink(get_page_by_path('mes-fdap')); ?>" style="font-size: 11px; color: rgba(255,255,255,0.8); text-decoration: none; border: 1px solid rgba(255,255,255,0.4); padding: 3px 8px; border-radius: 6px; font-weight: 600;" title="Toutes les fiches">↩ Gestion</a>
+                </div>
                 
                 <div class="header-status-select">
                     <select name="post_status" class="fdap-status-select-mini">

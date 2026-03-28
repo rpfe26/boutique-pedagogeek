@@ -15,8 +15,21 @@ class FDAP_Integration {
         // Auto-save post modified date after upload
         add_action('add_attachment', [$this, 'auto_save_fdap_post'], 10, 1);
         
-        // Admin bar nodes for easy access
-        add_action('admin_bar_menu', [$this, 'add_fdap_admin_bar_nodes'], 90);
+        // Admin bar nodes for easy access - High priority to ensure persistence
+        add_action('admin_bar_menu', [$this, 'add_fdap_admin_bar_nodes'], 999);
+        
+        // Force show admin bar for logged in users (critical for students)
+        add_filter('show_admin_bar', [$this, 'force_show_admin_bar']);
+    }
+
+    /**
+     * Force show admin bar for all logged in users
+     */
+    public function force_show_admin_bar($show) {
+        if (is_user_logged_in()) {
+            return true;
+        }
+        return $show;
     }
 
     /**
@@ -107,11 +120,17 @@ class FDAP_Integration {
 
         $is_admin = current_user_can('edit_others_posts');
         
+        $mes_fdap_page = get_page_by_path('mes-fdap');
+        $mes_fdap_url = $mes_fdap_page ? get_permalink($mes_fdap_page) : home_url('/mes-fdap/');
+        
+        $new_fdap_page = get_page_by_path('fdap-2');
+        $new_fdap_url = $new_fdap_page ? get_permalink($new_fdap_page) : home_url('/fdap-2/');
+
         // Main Node
         $admin_bar->add_node([
             'id'    => 'fdap-portfolio',
             'title' => '<span class="ab-icon dashicons dashicons-portfolio" style="top:2px;"></span> FDAP Portfolio',
-            'href'  => $is_admin ? admin_url('admin.php?page=fdap-dashboard') : get_permalink(get_page_by_path('mes-fdap')),
+            'href'  => $is_admin ? admin_url('admin.php?page=fdap-dashboard') : $mes_fdap_url,
             'meta'  => ['title' => 'Accès rapide Portfolio']
         ]);
 
@@ -135,13 +154,13 @@ class FDAP_Integration {
                 'id'     => 'fdap-student-list',
                 'parent' => 'fdap-portfolio',
                 'title'  => '📂 Mes fiches',
-                'href'   => get_permalink(get_page_by_path('mes-fdap'))
+                'href'   => $mes_fdap_url
             ]);
             $admin_bar->add_node([
                 'id'     => 'fdap-student-new',
                 'parent' => 'fdap-portfolio',
                 'title'  => '➕ Nouvelle activité',
-                'href'   => get_permalink(get_page_by_path('fdap-2'))
+                'href'   => $new_fdap_url
             ]);
         }
     }

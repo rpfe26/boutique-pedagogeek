@@ -86,8 +86,6 @@ require get_template_directory() . '/inc/block-style.php';
 //theme option panel
 require get_template_directory() . '/theme-option/theme-option.php';
 
-
-
 // === AMELIORATION LISIBILITE HEADER ===
 function blur_enqueue_custom_header_css() {
     wp_enqueue_style(
@@ -97,7 +95,7 @@ function blur_enqueue_custom_header_css() {
         '1.0.0'
     );
 }
-add_action('wp_enqueue_scripts', 'blur_enqueue_custom_header_css', 999);
+add_action('wp_enqueue_scripts', 'blur_enqueue_custom_header_css');
 
 // === AMELIORATION BACKOFFICE - ONGLETS CLIQUABLES ===
 function blur_enqueue_admin_tabs_css() {
@@ -135,4 +133,3 @@ function blur_enqueue_admin_bar_css() {
     }
 }
 add_action('wp_enqueue_scripts', 'blur_enqueue_admin_bar_css');
-

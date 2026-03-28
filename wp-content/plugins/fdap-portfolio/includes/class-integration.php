@@ -30,15 +30,23 @@ class FDAP_Integration {
 
         // 1. Validation (Format & Size)
         $valid_types = [
+            // Images
             'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp',
+            // Documents
             'application/pdf', 'application/msword',
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'application/vnd.ms-excel',
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             'text/plain',
+            // Audio
             'audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/x-wav',
             'audio/mp4', 'audio/x-m4a', 'audio/ogg', 'audio/aac',
+            'audio/x-mpeg', 'audio/mpeg3',
+            // Vidéo
             'video/mp4', 'video/webm', 'video/ogg', 'video/quicktime',
+            'video/x-msvideo', 'video/x-ms-wmv',
+            // Archives
+            'application/zip', 'application/x-zip-compressed',
         ];
 
         $type_prefix = explode('/', $file['type'])[0];
@@ -52,21 +60,21 @@ class FDAP_Integration {
         $max_size = $max_sizes[$type_prefix] ?? 10 * 1024 * 1024;
 
         if (!in_array($file['type'], $valid_types)) {
-            return ['error' => 'Format non supporté pour le Portfolio FDAP.'];
+            return ['error' => 'Format non supporté pour le Portfolio FDAP (Images, PDF, DOC, MP3, MP4, ZIP).'];
         }
 
         if ($file['size'] > $max_size) {
             $max_mb = round($max_size / (1024 * 1024));
-            return ['error' => 'Fichier trop volumineux (max ' . $max_mb . 'MB).'];
+            return ['error' => 'Fichier trop volumineux (max ' . $max_mb . 'MB pour ce type).'];
         }
 
         // 2. Compression (if image)
         if (in_array($file['type'], ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'])) {
             if (file_exists($file['tmp_name']) && function_exists('fdap_compress_image_file')) {
+                // We use the centralized quality settings
                 $result = fdap_compress_image_file($file['tmp_name'], $file['type']);
                 if ($result && !is_wp_error($result)) {
                     $file['size'] = $result['final_size'];
-                    // Note: original filename remains same here, compression replaces content
                 }
             }
         }
